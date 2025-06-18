@@ -1,0 +1,133 @@
+# Mobile Test Automation Framework - Project Intelligence
+
+## Project Patterns
+
+### Code Organization
+
+1. **Package Structure**
+   - `com.framework.config`: Configuration management classes
+   - `com.framework.core`: Core framework components
+   - `com.framework.device`: Device abstraction layer
+   - `com.framework.page`: Page object base classes
+   - `com.framework.reporting`: Reporting utilities
+   - `com.framework.utils`: Utility classes
+   - `com.framework.tests`: Test classes
+
+2. **Naming Conventions**
+   - Classes: PascalCase (e.g., `LoginPage`, `AndroidDevice`)
+   - Methods: camelCase (e.g., `waitForPageToLoad`, `enterUsername`)
+   - Constants: UPPER_SNAKE_CASE (e.g., `DEFAULT_TIMEOUT`, `PLATFORM_ANDROID`)
+   - Packages: lowercase (e.g., `com.framework.device`)
+
+3. **File Organization**
+   - Base classes in `src/main/java`
+   - Test classes in `src/test/java`
+   - Resources in `src/main/resources` and `src/test/resources`
+   - Configuration files in `src/main/resources/config`
+
+### Design Patterns
+
+1. **Page Object Model**
+   - Each screen/page has its own class extending `BasePage`
+   - Locators are stored in nested static classes
+   - Platform-specific locators are separated into `Android` and `iOS` inner classes
+   - Page methods return `this` or another page object for method chaining
+
+2. **Factory Pattern**
+   - `DeviceFactory` creates platform-specific device instances
+   - Factory methods are static and take configuration parameters
+
+3. **Singleton Pattern (Thread-Safe)**
+   - `DriverManager` uses ThreadLocal for thread-safe singleton
+   - `ConfigManager` uses eager initialization singleton
+
+4. **Decorator Pattern**
+   - Used for adding functionality to page objects
+   - Example: `LoggingPageDecorator` adds logging to page interactions
+
+### Testing Patterns
+
+1. **Test Structure**
+   - Test classes extend `BaseTest`
+   - Test methods use TestNG annotations (`@Test`, `@BeforeMethod`, etc.)
+   - Test methods are focused on business logic, not implementation details
+   - Page objects handle UI interactions
+
+2. **Assertions**
+   - TestNG assertions are used (`Assert.assertEquals`, `Assert.assertTrue`, etc.)
+   - Assertion messages are descriptive and include actual/expected values
+   - Soft assertions are used when multiple checks are needed
+
+3. **Test Data**
+   - Test data is stored in external files when possible
+   - TestNG data providers are used for parameterized tests
+   - Test data is isolated from test logic
+
+## User Preferences
+
+### Development Workflow
+
+1. **Preferred IDE**: IntelliJ IDEA or Eclipse with TestNG and Lombok plugins
+2. **Build Tool**: Maven with standard lifecycle commands
+3. **Version Control**: Git with feature branch workflow
+4. **Code Style**: Google Java Style Guide with 4-space indentation
+
+### Documentation Preferences
+
+1. **README Format**: Markdown with clear sections and code examples
+2. **Code Comments**: Javadoc for public methods, inline comments for complex logic
+3. **Memory Bank**: Comprehensive documentation in memory-bank directory
+
+## Known Challenges
+
+1. **Appium Stability**
+   - Appium server can be unstable in certain environments
+   - Solution: Implement robust retry mechanisms and error handling
+
+2. **Device Fragmentation**
+   - Different devices may have different behaviors
+   - Solution: Abstract device-specific behavior and use capability-based feature detection
+
+3. **Synchronization Issues**
+   - Mobile apps may have unpredictable loading times
+   - Solution: Implement smart waiting strategies with appropriate timeouts
+
+4. **Deprecated APIs**
+   - Some Appium APIs are deprecated and need updating
+   - Solution: Regular dependency updates and refactoring
+
+## Project Evolution
+
+### Recent Changes
+
+1. **Java Version**: Downgraded from Java 21 to Java 17 for compatibility
+2. **CI/CD Integration**: Added GitHub Actions workflows
+3. **Reporting**: Implemented ExtentReports for HTML reporting
+4. **Test Base**: Created BaseTest class for common functionality
+
+### Planned Changes
+
+1. **API Testing**: Add REST API testing capabilities
+2. **Cloud Integration**: Support for cloud testing platforms
+3. **Docker Support**: Containerized test execution
+4. **Performance Metrics**: Capture and report performance data
+
+## Tool Usage Patterns
+
+1. **Maven Commands**
+   - `mvn clean compile`: Compile the project
+   - `mvn clean test`: Run all tests
+   - `mvn clean test -DsuiteXmlFile=src/test/resources/testng/testng.xml`: Run specific test suite
+   - `mvn clean test -Dtest=LoginTest`: Run specific test class
+
+2. **TestNG Configuration**
+   - Parallel execution at test level
+   - Thread count: 2 (configurable in testng.xml)
+   - Test groups for selective execution
+   - Listeners for reporting and error handling
+
+3. **Logging**
+   - SLF4J with Logback implementation
+   - Log levels: ERROR, WARN, INFO, DEBUG, TRACE
+   - Log format: timestamp, level, thread, class, message
+   - Log rotation: daily with 7-day retention
