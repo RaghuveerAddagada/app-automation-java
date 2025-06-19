@@ -4,6 +4,12 @@ on:
   pull_request:
     branches: [ main, master ]
 
+# Add this permissions block
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
