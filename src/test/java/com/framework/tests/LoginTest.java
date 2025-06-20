@@ -3,8 +3,7 @@ package com.framework.tests;
 import com.framework.core.BaseTest;
 import com.framework.page.HomePage;
 import com.framework.page.LoginPage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -15,9 +14,8 @@ import java.util.Map;
  * Demonstrates how to use the Page Object Model pattern in tests.
  * Extends BaseTest to inherit common setup and teardown functionality.
  */
+@Slf4j
 public class LoginTest extends BaseTest {
-    
-    private static final Logger logger = LoggerFactory.getLogger(LoginTest.class);
     
     /**
      * Adds platform-specific capabilities to the capabilities map.
@@ -26,7 +24,7 @@ public class LoginTest extends BaseTest {
      */
     @Override
     protected void addPlatformCapabilities(Map<String, Object> capabilities) {
-        logger.info("Adding platform-specific capabilities for login tests");
+        log.info("Adding platform-specific capabilities for login tests");
         
         // Add app-specific capabilities
         if (platform.equalsIgnoreCase("android")) {
@@ -42,7 +40,7 @@ public class LoginTest extends BaseTest {
      */
     @Test
     public void testSuccessfulLogin() {
-        logger.info("Starting successful login test");
+        log.info("Starting successful login test");
         
         // Initialize the login page and wait for it to load
         LoginPage loginPage = new LoginPage().waitForPageToLoad();
@@ -54,15 +52,15 @@ public class LoginTest extends BaseTest {
         homePage.waitForPageToLoad();
         
         // Verify welcome message
-        String welcomeMessage = homePage.getWelcomeMessageText();
-        logger.info("Welcome message: {}", welcomeMessage);
+        String welcomeMessage = homePage.getWelcomeMessage();
+        log.info("Welcome message: {}", welcomeMessage);
         Assert.assertTrue(welcomeMessage.contains("Welcome"), "Welcome message should contain 'Welcome'");
         
         // Logout
-        loginPage = homePage.logout();
+        loginPage = homePage.clickLogout();
         loginPage.waitForPageToLoad();
         
-        logger.info("Successful login test completed");
+        log.info("Successful login test completed");
     }
     
     /**
@@ -70,7 +68,7 @@ public class LoginTest extends BaseTest {
      */
     @Test
     public void testFailedLogin() {
-        logger.info("Starting failed login test");
+        log.info("Starting failed login test");
         
         // Initialize the login page and wait for it to load
         LoginPage loginPage = new LoginPage().waitForPageToLoad();
@@ -78,14 +76,14 @@ public class LoginTest extends BaseTest {
         // Enter invalid credentials
         loginPage.enterUsername("invaliduser")
                  .enterPassword("invalidpassword")
-                 .tapLoginButton();
+                 .clickLogin();
         
         // Verify error message
         Assert.assertTrue(loginPage.isErrorMessageDisplayed(), "Error message should be displayed");
-        String errorMessage = loginPage.getErrorMessageText();
-        logger.info("Error message: {}", errorMessage);
+        String errorMessage = loginPage.getErrorMessage();
+        log.info("Error message: {}", errorMessage);
         Assert.assertTrue(errorMessage.contains("Invalid"), "Error message should contain 'Invalid'");
         
-        logger.info("Failed login test completed");
+        log.info("Failed login test completed");
     }
 }

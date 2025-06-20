@@ -31,9 +31,17 @@ The framework has recently undergone several significant updates and improvement
      - **Reporting Package**: ExtentReportManager.java
      - **Page Package**: LoginPage.java, HomePage.java, ProfilePage.java
      - **Core Package**: BaseTest.java, TestListener.java
+     - **Tests Package**: LoginTest.java
    - Improved code readability and reduced boilerplate code
    - Ensured consistent logging approach throughout the framework
    - Successfully compiled with Maven to verify the changes
+
+2. **Fixed Method Name Mismatches in LoginTest.java**:
+   - Changed `homePage.getWelcomeMessageText()` to `homePage.getWelcomeMessage()`
+   - Changed `loginPage.getErrorMessageText()` to `loginPage.getErrorMessage()`
+   - Changed `loginPage.tapLoginButton()` to `loginPage.clickLogin()`
+   - Changed `homePage.logout()` to `homePage.clickLogout()`
+   - These changes align the test code with the actual method names in the page objects
 
 ### Framework Improvements (June 18, 2025)
 
