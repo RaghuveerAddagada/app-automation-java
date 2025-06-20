@@ -2,8 +2,7 @@ package com.framework.core;
 
 import com.framework.config.ConfigManager;
 import com.framework.device.DriverManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -20,9 +19,9 @@ import java.util.Map;
  * Base class for all test classes.
  * Provides common setup and teardown functionality.
  */
+@Slf4j
 public abstract class BaseTest {
     
-    private static final Logger logger = LoggerFactory.getLogger(BaseTest.class);
     protected String platform;
     protected ConfigManager configManager;
     
@@ -37,7 +36,7 @@ public abstract class BaseTest {
     @Parameters(value = {"platform"})
     public void baseSetUp(String platform, ITestContext context) {
         this.platform = platform != null ? platform : "android"; // Default to android if not specified
-        logger.info("Setting up test class: {} for platform: {}", this.getClass().getSimpleName(), this.platform);
+        log.info("Setting up test class: {} for platform: {}", this.getClass().getSimpleName(), this.platform);
         
         // Store platform in test context
         context.setAttribute("platform", this.platform);
@@ -45,7 +44,7 @@ public abstract class BaseTest {
         // Load configuration
         configManager = ConfigManager.getInstance();
         String appiumUrl = configManager.getProperty("appium.server.url");
-        logger.info("Appium server URL: {}", appiumUrl);
+        log.info("Appium server URL: {}", appiumUrl);
         
         // Initialize driver with platform and capabilities
         Map<String, Object> capabilities = new HashMap<>();
@@ -62,7 +61,7 @@ public abstract class BaseTest {
         // Call the test-specific setup method
         setUp();
         
-        logger.info("Test class setup complete");
+        log.info("Test class setup complete");
     }
     
     /**
@@ -73,7 +72,7 @@ public abstract class BaseTest {
      */
     @AfterClass
     public void baseTearDown(ITestContext context) {
-        logger.info("Tearing down test class: {}", this.getClass().getSimpleName());
+        log.info("Tearing down test class: {}", this.getClass().getSimpleName());
         
         // Call the test-specific teardown method
         tearDown();
@@ -81,7 +80,7 @@ public abstract class BaseTest {
         // Quit the driver
         DriverManager.quitDriver();
         
-        logger.info("Test class teardown complete");
+        log.info("Test class teardown complete");
     }
     
     /**
@@ -92,7 +91,7 @@ public abstract class BaseTest {
      */
     @BeforeMethod
     public void baseBeforeMethod(Method method, ITestContext context) {
-        logger.info("Starting test method: {}", method.getName());
+        log.info("Starting test method: {}", method.getName());
         
         // Call the test-specific before method
         beforeMethod(method);
@@ -107,7 +106,7 @@ public abstract class BaseTest {
     @AfterMethod
     public void baseAfterMethod(ITestResult result, ITestContext context) {
         String status = getTestResultStatus(result);
-        logger.info("Finished test method: {} with status: {}", result.getMethod().getMethodName(), status);
+        log.info("Finished test method: {} with status: {}", result.getMethod().getMethodName(), status);
         
         // Call the test-specific after method
         afterMethod(result);

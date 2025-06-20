@@ -1,8 +1,7 @@
 package com.framework.device;
 
 import io.appium.java_client.AppiumDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
@@ -10,9 +9,8 @@ import java.util.Map;
  * Manager class for handling device driver instances.
  * Implements the ThreadLocal Singleton pattern for thread-safe driver management.
  */
+@Slf4j
 public class DriverManager {
-    
-    private static final Logger logger = LoggerFactory.getLogger(DriverManager.class);
     
     // ThreadLocal to store device instances for each thread
     private static final ThreadLocal<IDevice> deviceThreadLocal = new ThreadLocal<>();
@@ -31,7 +29,7 @@ public class DriverManager {
      * @param capabilities The capabilities to initialize the driver with
      */
     public static void initDevice(String platform, Map<String, Object> capabilities) {
-        logger.info("Initializing device for platform: {}", platform);
+        log.info("Initializing device for platform: {}", platform);
         
         // Quit any existing driver
         quitDriver();
@@ -45,7 +43,7 @@ public class DriverManager {
         // Store the device in the ThreadLocal
         deviceThreadLocal.set(device);
         
-        logger.info("Device initialized successfully for platform: {}", platform);
+        log.info("Device initialized successfully for platform: {}", platform);
     }
     
     /**
@@ -57,7 +55,7 @@ public class DriverManager {
     public static IDevice getDevice() {
         IDevice device = deviceThreadLocal.get();
         if (device == null) {
-            logger.error("Device has not been initialized. Call initDevice() first.");
+            log.error("Device has not been initialized. Call initDevice() first.");
             throw new IllegalStateException("Device has not been initialized. Call initDevice() first.");
         }
         return device;
@@ -79,7 +77,7 @@ public class DriverManager {
     public static void quitDriver() {
         IDevice device = deviceThreadLocal.get();
         if (device != null) {
-            logger.info("Quitting driver for platform: {}", device.getPlatformName());
+            log.info("Quitting driver for platform: {}", device.getPlatformName());
             device.quitDriver();
             deviceThreadLocal.remove();
         }

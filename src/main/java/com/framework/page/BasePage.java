@@ -2,6 +2,7 @@ package com.framework.page;
 
 import com.framework.device.DriverManager;
 import io.appium.java_client.AppiumDriver;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -11,8 +12,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -23,9 +22,9 @@ import java.util.Map;
  * Base class for all page objects.
  * Provides common functionality and platform-specific locator resolution.
  */
+@Slf4j
 public abstract class BasePage {
     
-    private static final Logger logger = LoggerFactory.getLogger(BasePage.class);
     protected AppiumDriver driver;
     protected static final int DEFAULT_TIMEOUT = 10; // seconds
     
@@ -35,7 +34,7 @@ public abstract class BasePage {
      */
     public BasePage() {
         this.driver = DriverManager.getDriver();
-        logger.debug("Initializing {} with driver", this.getClass().getSimpleName());
+        log.debug("Initializing {} with driver", this.getClass().getSimpleName());
     }
     
     /**
@@ -48,7 +47,7 @@ public abstract class BasePage {
     protected By getLocator(By androidLocator, By iosLocator) {
         String platform = DriverManager.getPlatformName();
         By locator = platform.equalsIgnoreCase("android") ? androidLocator : iosLocator;
-        logger.debug("Resolved locator for platform {}: {}", platform, locator);
+        log.debug("Resolved locator for platform {}: {}", platform, locator);
         return locator;
     }
     
@@ -70,7 +69,7 @@ public abstract class BasePage {
      * @return The WebElement once it's visible
      */
     protected WebElement waitForVisibility(By locator, int timeoutSeconds) {
-        logger.debug("Waiting for visibility of element: {} with timeout: {}s", locator, timeoutSeconds);
+        log.debug("Waiting for visibility of element: {} with timeout: {}s", locator, timeoutSeconds);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
@@ -93,7 +92,7 @@ public abstract class BasePage {
      * @return The WebElement once it's clickable
      */
     protected WebElement waitForClickability(By locator, int timeoutSeconds) {
-        logger.debug("Waiting for clickability of element: {} with timeout: {}s", locator, timeoutSeconds);
+        log.debug("Waiting for clickability of element: {} with timeout: {}s", locator, timeoutSeconds);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
@@ -107,10 +106,10 @@ public abstract class BasePage {
     protected boolean isElementDisplayed(By locator) {
         try {
             boolean isDisplayed = driver.findElement(locator).isDisplayed();
-            logger.debug("Element {} is displayed: {}", locator, isDisplayed);
+            log.debug("Element {} is displayed: {}", locator, isDisplayed);
             return isDisplayed;
         } catch (Exception e) {
-            logger.debug("Element {} is not displayed: {}", locator, e.getMessage());
+            log.debug("Element {} is not displayed: {}", locator, e.getMessage());
             return false;
         }
     }
@@ -122,7 +121,7 @@ public abstract class BasePage {
      * @return The current page instance for method chaining
      */
     protected BasePage tap(By locator) {
-        logger.info("Tapping on element: {}", locator);
+        log.info("Tapping on element: {}", locator);
         waitForClickability(locator).click();
         return this;
     }
@@ -135,7 +134,7 @@ public abstract class BasePage {
      * @return The current page instance for method chaining
      */
     protected BasePage type(By locator, String text) {
-        logger.info("Typing '{}' into element: {}", text, locator);
+        log.info("Typing '{}' into element: {}", text, locator);
         WebElement element = waitForVisibility(locator);
         element.clear();
         element.sendKeys(text);
@@ -150,7 +149,7 @@ public abstract class BasePage {
      */
     protected String getText(By locator) {
         String text = waitForVisibility(locator).getText();
-        logger.debug("Got text from element {}: '{}'", locator, text);
+        log.debug("Got text from element {}: '{}'", locator, text);
         return text;
     }
     
@@ -163,7 +162,7 @@ public abstract class BasePage {
      */
     protected String getAttribute(By locator, String attribute) {
         String value = waitForVisibility(locator).getAttribute(attribute);
-        logger.debug("Got attribute '{}' from element {}: '{}'", attribute, locator, value);
+        log.debug("Got attribute '{}' from element {}: '{}'", attribute, locator, value);
         return value;
     }
     
@@ -185,7 +184,7 @@ public abstract class BasePage {
      * @return The WebElement once it's present
      */
     protected WebElement waitForPresence(By locator, int timeoutSeconds) {
-        logger.debug("Waiting for presence of element: {} with timeout: {}s", locator, timeoutSeconds);
+        log.debug("Waiting for presence of element: {} with timeout: {}s", locator, timeoutSeconds);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
@@ -208,7 +207,7 @@ public abstract class BasePage {
      * @return true if the element is invisible, false otherwise
      */
     protected boolean waitForInvisibility(By locator, int timeoutSeconds) {
-        logger.debug("Waiting for invisibility of element: {} with timeout: {}s", locator, timeoutSeconds);
+        log.debug("Waiting for invisibility of element: {} with timeout: {}s", locator, timeoutSeconds);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
@@ -220,7 +219,7 @@ public abstract class BasePage {
      * @return List of WebElements
      */
     protected List<WebElement> findElements(By locator) {
-        logger.debug("Finding elements: {}", locator);
+        log.debug("Finding elements: {}", locator);
         return driver.findElements(locator);
     }
     
@@ -233,10 +232,10 @@ public abstract class BasePage {
     protected boolean isElementPresent(By locator) {
         try {
             driver.findElement(locator);
-            logger.debug("Element {} is present", locator);
+            log.debug("Element {} is present", locator);
             return true;
         } catch (NoSuchElementException e) {
-            logger.debug("Element {} is not present", locator);
+            log.debug("Element {} is not present", locator);
             return false;
         }
     }
@@ -253,7 +252,7 @@ public abstract class BasePage {
             waitForPresence(locator, timeoutSeconds);
             return true;
         } catch (TimeoutException e) {
-            logger.debug("Element {} did not appear within {}s", locator, timeoutSeconds);
+            log.debug("Element {} did not appear within {}s", locator, timeoutSeconds);
             return false;
         }
     }
@@ -269,7 +268,7 @@ public abstract class BasePage {
      * @return The current page instance for method chaining
      */
     protected BasePage swipe(int startX, int startY, int endX, int endY, int durationMs) {
-        logger.info("Swiping from ({},{}) to ({},{}) with duration {}ms", startX, startY, endX, endY, durationMs);
+        log.info("Swiping from ({},{}) to ({},{}) with duration {}ms", startX, startY, endX, endY, durationMs);
         
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Map<String, Object> params = new HashMap<>();
@@ -291,7 +290,7 @@ public abstract class BasePage {
      * @return The current page instance for method chaining
      */
     protected BasePage longPress(By locator, int durationMs) {
-        logger.info("Long pressing on element: {} for {}ms", locator, durationMs);
+        log.info("Long pressing on element: {} for {}ms", locator, durationMs);
         WebElement element = waitForVisibility(locator);
         
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -311,12 +310,12 @@ public abstract class BasePage {
      * @return The current page instance for method chaining
      */
     protected BasePage scrollToElement(By locator, int maxScrolls) {
-        logger.info("Scrolling to element: {} (max scrolls: {})", locator, maxScrolls);
+        log.info("Scrolling to element: {} (max scrolls: {})", locator, maxScrolls);
         
         int scrollAttempt = 0;
         while (scrollAttempt < maxScrolls) {
             if (isElementDisplayed(locator)) {
-                logger.debug("Element found after {} scrolls", scrollAttempt);
+                log.debug("Element found after {} scrolls", scrollAttempt);
                 return this;
             }
             
@@ -331,7 +330,7 @@ public abstract class BasePage {
             scrollAttempt++;
         }
         
-        logger.warn("Element not found after {} scrolls", maxScrolls);
+        log.warn("Element not found after {} scrolls", maxScrolls);
         return this;
     }
     
@@ -342,15 +341,15 @@ public abstract class BasePage {
      * @return true if alert was handled, false if no alert appeared
      */
     protected boolean acceptAlertIfPresent(int timeoutSeconds) {
-        logger.info("Attempting to accept alert if present (timeout: {}s)", timeoutSeconds);
+        log.info("Attempting to accept alert if present (timeout: {}s)", timeoutSeconds);
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
             wait.until(ExpectedConditions.alertIsPresent());
             driver.switchTo().alert().accept();
-            logger.debug("Alert accepted");
+            log.debug("Alert accepted");
             return true;
         } catch (TimeoutException e) {
-            logger.debug("No alert present within timeout");
+            log.debug("No alert present within timeout");
             return false;
         }
     }
@@ -362,7 +361,7 @@ public abstract class BasePage {
      * @return The path to the screenshot file
      */
     protected String takeScreenshot(String screenshotName) {
-        logger.debug("Taking screenshot: {}", screenshotName);
+        log.debug("Taking screenshot: {}", screenshotName);
         // Implementation depends on your screenshot utility
         // This is just a placeholder
         return "screenshots/" + screenshotName + ".png";

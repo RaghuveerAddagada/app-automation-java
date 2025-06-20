@@ -8,10 +8,9 @@ import com.framework.device.DriverManager;
 import com.framework.reporting.ExtentReportManager;
 import com.framework.utils.ScreenshotUtils;
 import io.appium.java_client.AppiumDriver;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -26,9 +25,8 @@ import java.util.Map;
  * TestNG listener for test execution events.
  * Handles test start, success, failure, and completion events.
  */
+@Slf4j
 public class TestListener implements ITestListener {
-    
-    private static final Logger logger = LoggerFactory.getLogger(TestListener.class);
     
     /**
      * Called when the test class is instantiated.
@@ -37,8 +35,8 @@ public class TestListener implements ITestListener {
      */
     @Override
     public void onStart(ITestContext context) {
-        logger.info("Starting test suite: {}", context.getName());
-        logger.info("Test suite includes {} tests", context.getAllTestMethods().length);
+        log.info("Starting test suite: {}", context.getName());
+        log.info("Test suite includes {} tests", context.getAllTestMethods().length);
         
         // Initialize ExtentReports
         ExtentReportManager.getInstance();
@@ -51,8 +49,8 @@ public class TestListener implements ITestListener {
      */
     @Override
     public void onFinish(ITestContext context) {
-        logger.info("Finished test suite: {}", context.getName());
-        logger.info("Test suite results: Passed={}, Failed={}, Skipped={}",
+        log.info("Finished test suite: {}", context.getName());
+        log.info("Test suite results: Passed={}, Failed={}, Skipped={}",
                 context.getPassedTests().size(),
                 context.getFailedTests().size(),
                 context.getSkippedTests().size());
@@ -69,11 +67,11 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestStart(ITestResult result) {
         String testName = result.getTestClass().getName() + "." + result.getMethod().getMethodName();
-        logger.info("Starting test: {}", testName);
+        log.info("Starting test: {}", testName);
         
         // Log test parameters if any
         if (result.getParameters().length > 0) {
-            logger.info("Test parameters: {}", Arrays.toString(result.getParameters()));
+            log.info("Test parameters: {}", Arrays.toString(result.getParameters()));
         }
         
         // Create test in ExtentReports
@@ -95,7 +93,7 @@ public class TestListener implements ITestListener {
     public void onTestSuccess(ITestResult result) {
         long executionTime = result.getEndMillis() - result.getStartMillis();
         String testName = result.getTestClass().getName() + "." + result.getMethod().getMethodName();
-        logger.info("Test passed: {} - Duration: {} ms", testName, executionTime);
+        log.info("Test passed: {} - Duration: {} ms", testName, executionTime);
         
         // Log test success in report
         ExtentReportManager.log(Status.PASS, "Test passed successfully. Duration: " + executionTime + " ms");
@@ -120,7 +118,7 @@ public class TestListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         long executionTime = result.getEndMillis() - result.getStartMillis();
         String testName = result.getTestClass().getName() + "." + result.getMethod().getMethodName();
-        logger.error("Test failed: {} - Duration: {} ms", testName, executionTime);
+        log.error("Test failed: {} - Duration: {} ms", testName, executionTime);
         
         // Get device information
         Map<String, Object> deviceInfo = getDeviceInfo();
@@ -128,8 +126,8 @@ public class TestListener implements ITestListener {
         // Log the exception
         Throwable throwable = result.getThrowable();
         if (throwable != null) {
-            logger.error("Failure reason: {}", throwable.getMessage());
-            logger.error("Stack trace: ", throwable);
+            log.error("Failure reason: {}", throwable.getMessage());
+            log.error("Stack trace: ", throwable);
             
             // Get full stack trace as string
             StringWriter sw = new StringWriter();
@@ -185,7 +183,7 @@ public class TestListener implements ITestListener {
                 // FileUtils.writeStringToFile(new File("target/pagesource_" + testName + ".xml"), pageSource, "UTF-8");
             }
         } catch (Exception e) {
-            logger.warn("Failed to capture page source: {}", e.getMessage());
+            log.warn("Failed to capture page source: {}", e.getMessage());
         }
         
         // Remove the test from ThreadLocal
@@ -200,12 +198,12 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestSkipped(ITestResult result) {
         String testName = result.getTestClass().getName() + "." + result.getMethod().getMethodName();
-        logger.info("Test skipped: {}", testName);
+        log.info("Test skipped: {}", testName);
         
         // Log the reason for skipping if available
         Throwable throwable = result.getThrowable();
         if (throwable != null) {
-            logger.info("Skip reason: {}", throwable.getMessage());
+            log.info("Skip reason: {}", throwable.getMessage());
             
             // Log skip in report
             ExtentReportManager.log(Status.SKIP, "Test skipped: " + throwable.getMessage());
@@ -225,7 +223,7 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
         String testName = result.getTestClass().getName() + "." + result.getMethod().getMethodName();
-        logger.info("Test failed but within success percentage: {}", testName);
+        log.info("Test failed but within success percentage: {}", testName);
         
         // Log in report
         ExtentReportManager.log(Status.WARNING, "Test failed but within success percentage");
@@ -241,7 +239,7 @@ public class TestListener implements ITestListener {
      */
     @Override
     public void onTestFailedWithTimeout(ITestResult result) {
-        logger.error("Test failed with timeout: {}.{}",
+        log.error("Test failed with timeout: {}.{}",
                 result.getTestClass().getName(),
                 result.getMethod().getMethodName());
         
@@ -281,7 +279,7 @@ public class TestListener implements ITestListener {
                 // We could add it if we extend to platform-specific drivers
             }
         } catch (Exception e) {
-            logger.warn("Failed to get complete device information: {}", e.getMessage());
+            log.warn("Failed to get complete device information: {}", e.getMessage());
         }
         
         return deviceInfo;
