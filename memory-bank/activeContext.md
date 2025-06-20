@@ -21,6 +21,20 @@ The framework has recently undergone several significant updates and improvement
 
 ## Recent Changes
 
+### Logger Implementation Standardization (June 20, 2025)
+
+1. **Standardized Logger Implementation**:
+   - Replaced manual logger declarations with Lombok's `@Slf4j` annotation across the entire codebase
+   - Updated the following files:
+     - **Device Package**: DeviceFactory.java, IOSDevice.java, BaseDevice.java, AndroidDevice.java
+     - **Utils Package**: MobileInteractionUtils.java, ScreenshotUtils.java
+     - **Reporting Package**: ExtentReportManager.java
+     - **Page Package**: LoginPage.java, HomePage.java, ProfilePage.java
+     - **Core Package**: BaseTest.java, TestListener.java
+   - Improved code readability and reduced boilerplate code
+   - Ensured consistent logging approach throughout the framework
+   - Successfully compiled with Maven to verify the changes
+
 ### Framework Improvements (June 18, 2025)
 
 1. **AndroidDevice.java Updates**:

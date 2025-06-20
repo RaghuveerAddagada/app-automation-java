@@ -5,11 +5,10 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,9 +20,8 @@ import java.util.Map;
  * Android implementation of the IDevice interface.
  * Provides Android-specific functionality for mobile automation.
  */
+@Slf4j
 public class AndroidDevice extends BaseDevice {
-    
-    private static final Logger logger = LoggerFactory.getLogger(AndroidDevice.class);
     
     /**
      * Constructor for AndroidDevice.
@@ -34,7 +32,7 @@ public class AndroidDevice extends BaseDevice {
     
     @Override
     public void initDriver(Map<String, Object> capabilities) {
-        logger.info("Initializing Android driver with capabilities: {}", capabilities);
+        log.info("Initializing Android driver with capabilities: {}", capabilities);
         
         try {
             // Use UiAutomator2Options instead of DesiredCapabilities
@@ -61,20 +59,20 @@ public class AndroidDevice extends BaseDevice {
             // Set implicit wait timeout after driver initialization
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             
-            logger.info("Android driver initialized successfully");
+            log.info("Android driver initialized successfully");
             
         } catch (MalformedURLException e) {
-            logger.error("Failed to initialize Android driver due to malformed URL", e);
+            log.error("Failed to initialize Android driver due to malformed URL", e);
             throw new RuntimeException("Failed to initialize Android driver", e);
         } catch (Exception e) {
-            logger.error("Failed to initialize Android driver", e);
+            log.error("Failed to initialize Android driver", e);
             throw new RuntimeException("Failed to initialize Android driver", e);
         }
     }
     
     @Override
     public void swipe(int startX, int startY, int endX, int endY, int durationMs) {
-        logger.info("Performing swipe from ({},{}) to ({},{}) with duration {}ms", startX, startY, endX, endY, durationMs);
+        log.info("Performing swipe from ({},{}) to ({},{}) with duration {}ms", startX, startY, endX, endY, durationMs);
         
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Map<String, Object> params = new HashMap<>();
@@ -95,7 +93,7 @@ public class AndroidDevice extends BaseDevice {
      * @return true if the app is installed, false otherwise
      */
     public boolean isAppInstalled(String bundleId) {
-        logger.info("Checking if app with bundle ID {} is installed", bundleId);
+        log.info("Checking if app with bundle ID {} is installed", bundleId);
         // Use the updated method that takes the app package as a parameter
         return ((AndroidDriver) driver).isAppInstalled(bundleId);
     }
@@ -108,7 +106,7 @@ public class AndroidDevice extends BaseDevice {
      * @param appActivity The app activity to start
      */
     public void startActivity(String appPackage, String appActivity) {
-        logger.info("Starting activity: {}/{}", appPackage, appActivity);
+        log.info("Starting activity: {}/{}", appPackage, appActivity);
         
         // Use the executeScript method with mobile: startActivity command
         // This is the recommended approach in newer Appium versions
@@ -125,7 +123,7 @@ public class AndroidDevice extends BaseDevice {
      * @param key The AndroidKey to press
      */
     public void pressKey(AndroidKey key) {
-        logger.info("Pressing key: {}", key);
+        log.info("Pressing key: {}", key);
         ((AndroidDriver) driver).pressKey(new KeyEvent(key));
     }
     
@@ -136,7 +134,7 @@ public class AndroidDevice extends BaseDevice {
      * @param durationMs The duration of the long press in milliseconds
      */
     public void longPress(WebElement element, int durationMs) {
-        logger.info("Performing long press on element for {}ms", durationMs);
+        log.info("Performing long press on element for {}ms", durationMs);
         
         Map<String, Object> params = new HashMap<>();
         params.put("elementId", ((RemoteWebElement) element).getId());
@@ -151,7 +149,7 @@ public class AndroidDevice extends BaseDevice {
      * @param text The text to scroll to
      */
     public void scrollToText(String text) {
-        logger.info("Scrolling to text: {}", text);
+        log.info("Scrolling to text: {}", text);
         
         Map<String, Object> params = new HashMap<>();
         params.put("strategy", "accessibility id");

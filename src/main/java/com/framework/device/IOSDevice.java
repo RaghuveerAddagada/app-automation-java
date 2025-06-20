@@ -2,11 +2,10 @@ package com.framework.device;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSDriver;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,9 +16,8 @@ import java.util.Map;
  * iOS implementation of the IDevice interface.
  * Provides iOS-specific functionality for mobile automation.
  */
+@Slf4j
 public class IOSDevice extends BaseDevice {
-    
-    private static final Logger logger = LoggerFactory.getLogger(IOSDevice.class);
     
     /**
      * Constructor for IOSDevice.
@@ -30,7 +28,7 @@ public class IOSDevice extends BaseDevice {
     
     @Override
     public void initDriver(Map<String, Object> capabilities) {
-        logger.info("Initializing iOS driver with capabilities: {}", capabilities);
+        log.info("Initializing iOS driver with capabilities: {}", capabilities);
         
         try {
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
@@ -49,20 +47,20 @@ public class IOSDevice extends BaseDevice {
             String appiumServerUrl = (String) capabilities.getOrDefault("appiumServerUrl", "http://127.0.0.1:4723");
             
             driver = new IOSDriver(new URL(appiumServerUrl), desiredCapabilities);
-            logger.info("iOS driver initialized successfully");
+            log.info("iOS driver initialized successfully");
             
         } catch (MalformedURLException e) {
-            logger.error("Failed to initialize iOS driver due to malformed URL", e);
+            log.error("Failed to initialize iOS driver due to malformed URL", e);
             throw new RuntimeException("Failed to initialize iOS driver", e);
         } catch (Exception e) {
-            logger.error("Failed to initialize iOS driver", e);
+            log.error("Failed to initialize iOS driver", e);
             throw new RuntimeException("Failed to initialize iOS driver", e);
         }
     }
     
     @Override
     public void swipe(int startX, int startY, int endX, int endY, int durationMs) {
-        logger.info("Performing swipe from ({},{}) to ({},{}) with duration {}ms", startX, startY, endX, endY, durationMs);
+        log.info("Performing swipe from ({},{}) to ({},{}) with duration {}ms", startX, startY, endX, endY, durationMs);
         
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Map<String, Object> params = new HashMap<>();
@@ -82,7 +80,7 @@ public class IOSDevice extends BaseDevice {
      * @return true if the app is installed, false otherwise
      */
     public boolean isAppInstalled(String bundleId) {
-        logger.info("Checking if app with bundle ID {} is installed", bundleId);
+        log.info("Checking if app with bundle ID {} is installed", bundleId);
         return ((IOSDriver) driver).isAppInstalled(bundleId);
     }
     
@@ -92,7 +90,7 @@ public class IOSDevice extends BaseDevice {
      * @param bundleId The bundle ID of the app to activate
      */
     public void activateApp(String bundleId) {
-        logger.info("Activating app with bundle ID: {}", bundleId);
+        log.info("Activating app with bundle ID: {}", bundleId);
         ((IOSDriver) driver).activateApp(bundleId);
     }
     
@@ -102,7 +100,7 @@ public class IOSDevice extends BaseDevice {
      * @param match true to simulate a successful authentication, false to simulate a failed one
      */
     public void performTouchID(boolean match) {
-        logger.info("Performing Touch ID authentication with match: {}", match);
+        log.info("Performing Touch ID authentication with match: {}", match);
         ((IOSDriver) driver).performTouchID(match);
     }
 }

@@ -1,76 +1,55 @@
 package com.framework.page;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Page object for the home screen.
- * Demonstrates the Page Object Model pattern with platform-specific locators.
+ * Handles home screen interactions and navigations.
  */
+@Slf4j
 public class HomePage extends BasePage {
     
-    private static final Logger logger = LoggerFactory.getLogger(HomePage.class);
-    
     /**
-     * Locators for elements on the home page.
+     * Locators for the home page elements.
      */
-    private static class Locators {
+    public static class Locators {
         /**
          * Android-specific locators.
          */
-        private static class Android {
-            static final By WELCOME_MESSAGE = By.id("com.example.app:id/welcome_message");
-            static final By MENU_BUTTON = By.id("com.example.app:id/menu_button");
-            static final By PROFILE_BUTTON = By.id("com.example.app:id/profile_button");
-            static final By LOGOUT_BUTTON = By.id("com.example.app:id/logout_button");
+        public static class Android {
+            public static final By WELCOME_MESSAGE = By.id("com.example.app:id/welcome_message");
+            public static final By PROFILE_BUTTON = By.id("com.example.app:id/profile_button");
+            public static final By SETTINGS_BUTTON = By.id("com.example.app:id/settings_button");
+            public static final By LOGOUT_BUTTON = By.id("com.example.app:id/logout_button");
+            public static final By NOTIFICATION_ICON = By.id("com.example.app:id/notification_icon");
+            public static final By SEARCH_BAR = By.id("com.example.app:id/search_bar");
         }
         
         /**
          * iOS-specific locators.
          */
-        private static class IOS {
-            static final By WELCOME_MESSAGE = By.xpath("//XCUIElementTypeStaticText[@name='welcome_message']");
-            static final By MENU_BUTTON = By.xpath("//XCUIElementTypeButton[@name='Menu']");
-            static final By PROFILE_BUTTON = By.xpath("//XCUIElementTypeButton[@name='Profile']");
-            static final By LOGOUT_BUTTON = By.xpath("//XCUIElementTypeButton[@name='Logout']");
+        public static class iOS {
+            public static final By WELCOME_MESSAGE = By.xpath("//XCUIElementTypeStaticText[@name='welcome_message']");
+            public static final By PROFILE_BUTTON = By.xpath("//XCUIElementTypeButton[@name='Profile']");
+            public static final By SETTINGS_BUTTON = By.xpath("//XCUIElementTypeButton[@name='Settings']");
+            public static final By LOGOUT_BUTTON = By.xpath("//XCUIElementTypeButton[@name='Logout']");
+            public static final By NOTIFICATION_ICON = By.xpath("//XCUIElementTypeButton[@name='Notifications']");
+            public static final By SEARCH_BAR = By.xpath("//XCUIElementTypeSearchField[@name='Search']");
         }
     }
     
     /**
-     * Gets the welcome message locator for the current platform.
+     * Waits for the home page to load.
      * 
-     * @return The welcome message locator
+     * @return The HomePage instance for method chaining
      */
-    private By getWelcomeMessage() {
-        return getLocator(Locators.Android.WELCOME_MESSAGE, Locators.IOS.WELCOME_MESSAGE);
-    }
-    
-    /**
-     * Gets the menu button locator for the current platform.
-     * 
-     * @return The menu button locator
-     */
-    private By getMenuButton() {
-        return getLocator(Locators.Android.MENU_BUTTON, Locators.IOS.MENU_BUTTON);
-    }
-    
-    /**
-     * Gets the profile button locator for the current platform.
-     * 
-     * @return The profile button locator
-     */
-    private By getProfileButton() {
-        return getLocator(Locators.Android.PROFILE_BUTTON, Locators.IOS.PROFILE_BUTTON);
-    }
-    
-    /**
-     * Gets the logout button locator for the current platform.
-     * 
-     * @return The logout button locator
-     */
-    private By getLogoutButton() {
-        return getLocator(Locators.Android.LOGOUT_BUTTON, Locators.IOS.LOGOUT_BUTTON);
+    @Override
+    public HomePage waitForPageToLoad() {
+        log.info("Waiting for home page to load");
+        waitForVisibility(getLocator(Locators.Android.WELCOME_MESSAGE, Locators.iOS.WELCOME_MESSAGE));
+        log.info("Home page loaded successfully");
+        return this;
     }
     
     /**
@@ -78,50 +57,89 @@ public class HomePage extends BasePage {
      * 
      * @return The welcome message text
      */
-    public String getWelcomeMessageText() {
-        logger.info("Getting welcome message text");
-        return getText(getWelcomeMessage());
+    public String getWelcomeMessage() {
+        log.debug("Getting welcome message text");
+        return getText(getLocator(Locators.Android.WELCOME_MESSAGE, Locators.iOS.WELCOME_MESSAGE));
     }
     
     /**
-     * Taps the menu button.
-     * 
-     * @return The HomePage instance for method chaining
-     */
-    public HomePage tapMenuButton() {
-        logger.info("Tapping menu button");
-        tap(getMenuButton());
-        return this;
-    }
-    
-    /**
-     * Taps the profile button.
+     * Clicks the profile button.
      * 
      * @return The ProfilePage instance
      */
-    public ProfilePage tapProfileButton() {
-        logger.info("Tapping profile button");
-        tap(getProfileButton());
-        return new ProfilePage();
+    public ProfilePage clickProfile() {
+        log.info("Clicking profile button");
+        tap(getLocator(Locators.Android.PROFILE_BUTTON, Locators.iOS.PROFILE_BUTTON));
+        return new ProfilePage().waitForPageToLoad();
     }
     
     /**
-     * Performs the logout action.
+     * Clicks the settings button.
+     * 
+     * @return A BasePage instance representing the settings page
+     */
+    public BasePage clickSettings() {
+        log.info("Clicking settings button");
+        tap(getLocator(Locators.Android.SETTINGS_BUTTON, Locators.iOS.SETTINGS_BUTTON));
+        // Return a generic BasePage since we don't have a SettingsPage class yet
+        return new BasePage() {
+            @Override
+            public BasePage waitForPageToLoad() {
+                // Implementation would be added when SettingsPage is created
+                return this;
+            }
+        };
+    }
+    
+    /**
+     * Clicks the logout button.
      * 
      * @return The LoginPage instance
      */
-    public LoginPage logout() {
-        logger.info("Logging out");
-        tapMenuButton();
-        tap(getLogoutButton());
-        return new LoginPage();
+    public LoginPage clickLogout() {
+        log.info("Clicking logout button");
+        tap(getLocator(Locators.Android.LOGOUT_BUTTON, Locators.iOS.LOGOUT_BUTTON));
+        return new LoginPage().waitForPageToLoad();
     }
     
-    @Override
-    public HomePage waitForPageToLoad() {
-        logger.info("Waiting for home page to load");
-        waitForVisibility(getWelcomeMessage());
-        logger.info("Home page loaded successfully");
+    /**
+     * Clicks the notification icon.
+     * 
+     * @return A BasePage instance representing the notifications page
+     */
+    public BasePage clickNotifications() {
+        log.info("Clicking notification icon");
+        tap(getLocator(Locators.Android.NOTIFICATION_ICON, Locators.iOS.NOTIFICATION_ICON));
+        // Return a generic BasePage since we don't have a NotificationsPage class yet
+        return new BasePage() {
+            @Override
+            public BasePage waitForPageToLoad() {
+                // Implementation would be added when NotificationsPage is created
+                return this;
+            }
+        };
+    }
+    
+    /**
+     * Enters text in the search bar.
+     * 
+     * @param searchText The text to search for
+     * @return The HomePage instance for method chaining
+     */
+    public HomePage search(String searchText) {
+        log.info("Searching for: {}", searchText);
+        type(getLocator(Locators.Android.SEARCH_BAR, Locators.iOS.SEARCH_BAR), searchText);
+        // In a real implementation, we might need to press enter or click a search button
         return this;
+    }
+    
+    /**
+     * Checks if the user is logged in by verifying the presence of the welcome message.
+     * 
+     * @return true if the user is logged in, false otherwise
+     */
+    public boolean isUserLoggedIn() {
+        log.debug("Checking if user is logged in");
+        return isElementDisplayed(getLocator(Locators.Android.WELCOME_MESSAGE, Locators.iOS.WELCOME_MESSAGE));
     }
 }

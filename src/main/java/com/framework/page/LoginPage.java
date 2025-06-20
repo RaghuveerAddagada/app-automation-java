@@ -1,128 +1,125 @@
 package com.framework.page;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Page object for the login screen.
- * Demonstrates the Page Object Model pattern with platform-specific locators.
+ * Handles login-related interactions and validations.
  */
+@Slf4j
 public class LoginPage extends BasePage {
     
-    private static final Logger logger = LoggerFactory.getLogger(LoginPage.class);
-    
     /**
-     * Locators for elements on the login page.
+     * Locators for the login page elements.
      */
-    private static class Locators {
+    public static class Locators {
         /**
          * Android-specific locators.
          */
-        private static class Android {
-            static final By USERNAME_FIELD = By.id("com.example.app:id/username");
-            static final By PASSWORD_FIELD = By.id("com.example.app:id/password");
-            static final By LOGIN_BUTTON = By.id("com.example.app:id/login_button");
-            static final By ERROR_MESSAGE = By.id("com.example.app:id/error_message");
+        public static class Android {
+            public static final By USERNAME_FIELD = By.id("com.example.app:id/username");
+            public static final By PASSWORD_FIELD = By.id("com.example.app:id/password");
+            public static final By LOGIN_BUTTON = By.id("com.example.app:id/login_button");
+            public static final By ERROR_MESSAGE = By.id("com.example.app:id/error_message");
+            public static final By FORGOT_PASSWORD = By.id("com.example.app:id/forgot_password");
+            public static final By REGISTER_LINK = By.id("com.example.app:id/register_link");
         }
         
         /**
          * iOS-specific locators.
          */
-        private static class IOS {
-            static final By USERNAME_FIELD = By.xpath("//XCUIElementTypeTextField[@name='username']");
-            static final By PASSWORD_FIELD = By.xpath("//XCUIElementTypeSecureTextField[@name='password']");
-            static final By LOGIN_BUTTON = By.xpath("//XCUIElementTypeButton[@name='Login']");
-            static final By ERROR_MESSAGE = By.xpath("//XCUIElementTypeStaticText[@name='error_message']");
+        public static class iOS {
+            public static final By USERNAME_FIELD = By.xpath("//XCUIElementTypeTextField[@name='username']");
+            public static final By PASSWORD_FIELD = By.xpath("//XCUIElementTypeSecureTextField[@name='password']");
+            public static final By LOGIN_BUTTON = By.xpath("//XCUIElementTypeButton[@name='Login']");
+            public static final By ERROR_MESSAGE = By.xpath("//XCUIElementTypeStaticText[@name='error_message']");
+            public static final By FORGOT_PASSWORD = By.xpath("//XCUIElementTypeButton[@name='Forgot Password']");
+            public static final By REGISTER_LINK = By.xpath("//XCUIElementTypeButton[@name='Register']");
         }
     }
     
     /**
-     * Gets the username field locator for the current platform.
+     * Waits for the login page to load.
      * 
-     * @return The username field locator
+     * @return The LoginPage instance for method chaining
      */
-    private By getUsernameField() {
-        return getLocator(Locators.Android.USERNAME_FIELD, Locators.IOS.USERNAME_FIELD);
+    @Override
+    public LoginPage waitForPageToLoad() {
+        log.info("Waiting for login page to load");
+        waitForVisibility(getLocator(Locators.Android.USERNAME_FIELD, Locators.iOS.USERNAME_FIELD));
+        waitForVisibility(getLocator(Locators.Android.PASSWORD_FIELD, Locators.iOS.PASSWORD_FIELD));
+        waitForVisibility(getLocator(Locators.Android.LOGIN_BUTTON, Locators.iOS.LOGIN_BUTTON));
+        log.info("Login page loaded successfully");
+        return this;
     }
     
     /**
-     * Gets the password field locator for the current platform.
-     * 
-     * @return The password field locator
-     */
-    private By getPasswordField() {
-        return getLocator(Locators.Android.PASSWORD_FIELD, Locators.IOS.PASSWORD_FIELD);
-    }
-    
-    /**
-     * Gets the login button locator for the current platform.
-     * 
-     * @return The login button locator
-     */
-    private By getLoginButton() {
-        return getLocator(Locators.Android.LOGIN_BUTTON, Locators.IOS.LOGIN_BUTTON);
-    }
-    
-    /**
-     * Gets the error message locator for the current platform.
-     * 
-     * @return The error message locator
-     */
-    private By getErrorMessage() {
-        return getLocator(Locators.Android.ERROR_MESSAGE, Locators.IOS.ERROR_MESSAGE);
-    }
-    
-    /**
-     * Enters the username in the username field.
+     * Enters the username.
      * 
      * @param username The username to enter
      * @return The LoginPage instance for method chaining
      */
     public LoginPage enterUsername(String username) {
-        logger.info("Entering username: {}", username);
-        type(getUsernameField(), username);
+        log.info("Entering username: {}", username);
+        type(getLocator(Locators.Android.USERNAME_FIELD, Locators.iOS.USERNAME_FIELD), username);
         return this;
     }
     
     /**
-     * Enters the password in the password field.
+     * Enters the password.
      * 
      * @param password The password to enter
      * @return The LoginPage instance for method chaining
      */
     public LoginPage enterPassword(String password) {
-        logger.info("Entering password: ****");
-        type(getPasswordField(), password);
+        log.info("Entering password: ********");
+        type(getLocator(Locators.Android.PASSWORD_FIELD, Locators.iOS.PASSWORD_FIELD), password);
         return this;
     }
     
     /**
-     * Taps the login button.
+     * Clicks the login button.
      * 
-     * @return The LoginPage instance for method chaining
+     * @return The HomePage instance if login is successful
      */
-    public LoginPage tapLoginButton() {
-        logger.info("Tapping login button");
-        tap(getLoginButton());
-        return this;
+    public HomePage clickLogin() {
+        log.info("Clicking login button");
+        tap(getLocator(Locators.Android.LOGIN_BUTTON, Locators.iOS.LOGIN_BUTTON));
+        
+        // Check if login was successful by looking for error message
+        if (isErrorMessageDisplayed()) {
+            log.warn("Login failed, error message displayed");
+            return null;
+        }
+        
+        // Return the HomePage instance
+        log.info("Login successful, navigating to home page");
+        return new HomePage().waitForPageToLoad();
     }
     
     /**
-     * Performs the login action with the given credentials.
+     * Performs a login with the specified credentials.
      * 
-     * @param username The username to enter
-     * @param password The password to enter
+     * @param username The username
+     * @param password The password
      * @return The HomePage instance if login is successful
      */
     public HomePage login(String username, String password) {
-        logger.info("Logging in with username: {}", username);
+        log.info("Performing login with username: {}", username);
         enterUsername(username);
         enterPassword(password);
-        tapLoginButton();
-        // In a real implementation, we would check if login was successful
-        // and return the appropriate page object
-        return new HomePage();
+        return clickLogin();
+    }
+    
+    /**
+     * Checks if an error message is displayed.
+     * 
+     * @return true if an error message is displayed, false otherwise
+     */
+    public boolean isErrorMessageDisplayed() {
+        log.debug("Checking if error message is displayed");
+        return isElementDisplayed(getLocator(Locators.Android.ERROR_MESSAGE, Locators.iOS.ERROR_MESSAGE));
     }
     
     /**
@@ -130,29 +127,44 @@ public class LoginPage extends BasePage {
      * 
      * @return The error message text
      */
-    public String getErrorMessageText() {
-        logger.info("Getting error message text");
-        return getText(getErrorMessage());
+    public String getErrorMessage() {
+        log.debug("Getting error message text");
+        return getText(getLocator(Locators.Android.ERROR_MESSAGE, Locators.iOS.ERROR_MESSAGE));
     }
     
     /**
-     * Checks if the error message is displayed.
+     * Clicks the forgot password link.
      * 
-     * @return true if the error message is displayed, false otherwise
+     * @return The ForgotPasswordPage instance
      */
-    public boolean isErrorMessageDisplayed() {
-        boolean isDisplayed = isElementDisplayed(getErrorMessage());
-        logger.info("Error message is displayed: {}", isDisplayed);
-        return isDisplayed;
+    public BasePage clickForgotPassword() {
+        log.info("Clicking forgot password link");
+        tap(getLocator(Locators.Android.FORGOT_PASSWORD, Locators.iOS.FORGOT_PASSWORD));
+        // Return a generic BasePage since we don't have a ForgotPasswordPage class yet
+        return new BasePage() {
+            @Override
+            public BasePage waitForPageToLoad() {
+                // Implementation would be added when ForgotPasswordPage is created
+                return this;
+            }
+        };
     }
     
-    @Override
-    public LoginPage waitForPageToLoad() {
-        logger.info("Waiting for login page to load");
-        waitForVisibility(getUsernameField());
-        waitForVisibility(getPasswordField());
-        waitForVisibility(getLoginButton());
-        logger.info("Login page loaded successfully");
-        return this;
+    /**
+     * Clicks the register link.
+     * 
+     * @return The RegisterPage instance
+     */
+    public BasePage clickRegister() {
+        log.info("Clicking register link");
+        tap(getLocator(Locators.Android.REGISTER_LINK, Locators.iOS.REGISTER_LINK));
+        // Return a generic BasePage since we don't have a RegisterPage class yet
+        return new BasePage() {
+            @Override
+            public BasePage waitForPageToLoad() {
+                // Implementation would be added when RegisterPage is created
+                return this;
+            }
+        };
     }
 }

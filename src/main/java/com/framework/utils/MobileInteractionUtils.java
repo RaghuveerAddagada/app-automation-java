@@ -2,28 +2,83 @@ package com.framework.utils;
 
 import com.framework.device.DriverManager;
 import io.appium.java_client.AppiumDriver;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Utility class for mobile-specific interactions.
+ * Utility class for mobile interactions.
+ * Provides common mobile-specific operations that can be used across the framework.
  */
+@Slf4j
 public class MobileInteractionUtils {
     
-    private static final Logger logger = LoggerFactory.getLogger(MobileInteractionUtils.class);
+    private static final int DEFAULT_TIMEOUT = 10; // seconds
     
-    /**
-     * Private constructor to prevent instantiation.
-     */
     private MobileInteractionUtils() {
         // Private constructor to prevent instantiation
     }
     
     /**
-     * Performs a swipe from one point to another.
+     * Waits for an element to be visible.
+     * 
+     * @param locator The locator to find the element
+     * @param timeoutSeconds The timeout in seconds
+     * @return The WebElement once it's visible
+     */
+    public static WebElement waitForVisibility(By locator, int timeoutSeconds) {
+        log.debug("Waiting for visibility of element: {} with timeout: {}s", locator, timeoutSeconds);
+        AppiumDriver driver = DriverManager.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+    
+    /**
+     * Waits for an element to be visible with the default timeout.
+     * 
+     * @param locator The locator to find the element
+     * @return The WebElement once it's visible
+     */
+    public static WebElement waitForVisibility(By locator) {
+        return waitForVisibility(locator, DEFAULT_TIMEOUT);
+    }
+    
+    /**
+     * Waits for an element to be clickable.
+     * 
+     * @param locator The locator to find the element
+     * @param timeoutSeconds The timeout in seconds
+     * @return The WebElement once it's clickable
+     */
+    public static WebElement waitForClickability(By locator, int timeoutSeconds) {
+        log.debug("Waiting for clickability of element: {} with timeout: {}s", locator, timeoutSeconds);
+        AppiumDriver driver = DriverManager.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+    
+    /**
+     * Waits for an element to be clickable with the default timeout.
+     * 
+     * @param locator The locator to find the element
+     * @return The WebElement once it's clickable
+     */
+    public static WebElement waitForClickability(By locator) {
+        return waitForClickability(locator, DEFAULT_TIMEOUT);
+    }
+    
+    /**
+     * Performs a swipe on the screen.
      * 
      * @param startX The starting X coordinate
      * @param startY The starting Y coordinate
@@ -32,128 +87,61 @@ public class MobileInteractionUtils {
      * @param durationMs The duration of the swipe in milliseconds
      */
     public static void swipe(int startX, int startY, int endX, int endY, int durationMs) {
-        logger.info("Performing swipe from ({},{}) to ({},{}) with duration {}ms", startX, startY, endX, endY, durationMs);
-        DriverManager.getDevice().swipe(startX, startY, endX, endY, durationMs);
-    }
-    
-    /**
-     * Performs a swipe up.
-     * 
-     * @param durationMs The duration of the swipe in milliseconds
-     */
-    public static void swipeUp(int durationMs) {
-        logger.info("Performing swipe up with duration {}ms", durationMs);
+        log.info("Swiping from ({},{}) to ({},{}) with duration {}ms", startX, startY, endX, endY, durationMs);
         AppiumDriver driver = DriverManager.getDriver();
-        Dimension size = driver.manage().window().getSize();
-        int startX = size.width / 2;
-        int startY = (int) (size.height * 0.8);
-        int endY = (int) (size.height * 0.2);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Map<String, Object> params = new HashMap<>();
+        params.put("startX", startX);
+        params.put("startY", startY);
+        params.put("endX", endX);
+        params.put("endY", endY);
+        params.put("duration", durationMs / 1000.0); // Convert to seconds for W3C actions
         
-        swipe(startX, startY, startX, endY, durationMs);
+        js.executeScript("mobile: swipe", params);
     }
     
     /**
-     * Performs a swipe down.
+     * Performs a tap on the screen at the specified coordinates.
      * 
-     * @param durationMs The duration of the swipe in milliseconds
+     * @param x The X coordinate
+     * @param y The Y coordinate
      */
-    public static void swipeDown(int durationMs) {
-        logger.info("Performing swipe down with duration {}ms", durationMs);
+    public static void tap(int x, int y) {
+        log.info("Tapping at coordinates ({},{})", x, y);
         AppiumDriver driver = DriverManager.getDriver();
-        Dimension size = driver.manage().window().getSize();
-        int startX = size.width / 2;
-        int startY = (int) (size.height * 0.2);
-        int endY = (int) (size.height * 0.8);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Map<String, Object> params = new HashMap<>();
+        params.put("x", x);
+        params.put("y", y);
         
-        swipe(startX, startY, startX, endY, durationMs);
+        js.executeScript("mobile: tap", params);
     }
     
     /**
-     * Performs a swipe left.
+     * Takes a screenshot and returns it as a File.
      * 
-     * @param durationMs The duration of the swipe in milliseconds
+     * @return The screenshot as a File
      */
-    public static void swipeLeft(int durationMs) {
-        logger.info("Performing swipe left with duration {}ms", durationMs);
+    public static File takeScreenshot() {
+        log.debug("Taking screenshot");
         AppiumDriver driver = DriverManager.getDriver();
-        Dimension size = driver.manage().window().getSize();
-        int startX = (int) (size.width * 0.8);
-        int endX = (int) (size.width * 0.2);
-        int startY = size.height / 2;
-        
-        swipe(startX, startY, endX, startY, durationMs);
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
     }
     
     /**
-     * Performs a swipe right.
-     * 
-     * @param durationMs The duration of the swipe in milliseconds
-     */
-    public static void swipeRight(int durationMs) {
-        logger.info("Performing swipe right with duration {}ms", durationMs);
-        AppiumDriver driver = DriverManager.getDriver();
-        Dimension size = driver.manage().window().getSize();
-        int startX = (int) (size.width * 0.2);
-        int endX = (int) (size.width * 0.8);
-        int startY = size.height / 2;
-        
-        swipe(startX, startY, endX, startY, durationMs);
-    }
-    
-    /**
-     * Scrolls to an element with the given text.
-     * 
-     * @param text The text to scroll to
-     * @param maxSwipes The maximum number of swipes to perform
-     * @return true if the element was found, false otherwise
-     */
-    public static boolean scrollToText(String text, int maxSwipes) {
-        logger.info("Scrolling to text '{}' with max swipes: {}", text, maxSwipes);
-        String platform = DriverManager.getPlatformName();
-        By locator;
-        
-        if (platform.equalsIgnoreCase("android")) {
-            locator = By.xpath("//*[@text='" + text + "']");
-        } else {
-            locator = By.xpath("//*[@name='" + text + "']");
-        }
-        
-        return scrollToElement(locator, maxSwipes);
-    }
-    
-    /**
-     * Scrolls to an element with the given locator.
+     * Checks if an element is displayed.
      * 
      * @param locator The locator to find the element
-     * @param maxSwipes The maximum number of swipes to perform
-     * @return true if the element was found, false otherwise
+     * @return true if the element is displayed, false otherwise
      */
-    public static boolean scrollToElement(By locator, int maxSwipes) {
-        logger.info("Scrolling to element {} with max swipes: {}", locator, maxSwipes);
-        for (int i = 0; i < maxSwipes; i++) {
-            if (isElementPresent(locator)) {
-                logger.info("Element found after {} swipes", i);
-                return true;
-            }
-            swipeUp(500);
-        }
-        logger.warn("Element not found after {} swipes", maxSwipes);
-        return false;
-    }
-    
-    /**
-     * Checks if an element is present.
-     * 
-     * @param locator The locator to find the element
-     * @return true if the element is present, false otherwise
-     */
-    public static boolean isElementPresent(By locator) {
+    public static boolean isElementDisplayed(By locator) {
         try {
-            boolean isPresent = DriverManager.getDriver().findElements(locator).size() > 0;
-            logger.debug("Element {} is present: {}", locator, isPresent);
-            return isPresent;
+            AppiumDriver driver = DriverManager.getDriver();
+            boolean isDisplayed = driver.findElement(locator).isDisplayed();
+            log.debug("Element {} is displayed: {}", locator, isDisplayed);
+            return isDisplayed;
         } catch (Exception e) {
-            logger.debug("Error checking if element {} is present: {}", locator, e.getMessage());
+            log.debug("Element {} is not displayed: {}", locator, e.getMessage());
             return false;
         }
     }

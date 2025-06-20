@@ -1,15 +1,13 @@
 package com.framework.device;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Factory class for creating device instances based on platform.
  * Implements the Factory Pattern to provide the appropriate IDevice implementation.
  */
+@Slf4j
 public class DeviceFactory {
-    
-    private static final Logger logger = LoggerFactory.getLogger(DeviceFactory.class);
     
     /**
      * Creates and returns an IDevice instance based on the specified platform.
@@ -20,19 +18,19 @@ public class DeviceFactory {
      */
     public static IDevice createDevice(String platform) {
         if (platform == null || platform.isEmpty()) {
-            logger.info("Platform not specified, defaulting to Android");
+            log.info("Platform not specified, defaulting to Android");
             return new AndroidDevice();
         }
         
         switch (platform.toLowerCase()) {
             case "ios":
-                logger.info("Creating iOS device");
+                log.info("Creating iOS device");
                 return new IOSDevice();
             case "android":
-                logger.info("Creating Android device");
+                log.info("Creating Android device");
                 return new AndroidDevice();
             default:
-                logger.warn("Unknown platform: {}, defaulting to Android", platform);
+                log.warn("Unknown platform: {}, defaulting to Android", platform);
                 return new AndroidDevice();
         }
     }
@@ -47,7 +45,7 @@ public class DeviceFactory {
      */
     public static IDevice createDeviceFromProperty(String propertyName, String defaultPlatform) {
         String platform = System.getProperty(propertyName, defaultPlatform);
-        logger.info("Creating device from system property: {}={}", propertyName, platform);
+        log.info("Creating device from system property: {}={}", propertyName, platform);
         return createDevice(platform);
     }
 }

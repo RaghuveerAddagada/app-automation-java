@@ -20,6 +20,7 @@
 |------------|---------|---------|
 | SLF4J | 2.0.7 | Logging facade |
 | Logback | 1.4.8 | Logging implementation |
+| Lombok @Slf4j | 1.18.30 | Logger creation and boilerplate reduction |
 | ExtentReports | 5.0.9 | HTML report generation |
 | Commons IO | 2.13.0 | File operations for screenshots |
 
@@ -231,7 +232,13 @@ Key transitive dependencies include:
 
 ### Recent Improvements
 
-1. **AndroidDevice.java Updates**
+1. **Logger Standardization**
+   - Replaced manual logger declarations with Lombok's @Slf4j annotation
+   - Standardized logging approach across all framework classes
+   - Improved code readability by reducing boilerplate
+   - Ensured consistent logging patterns throughout the codebase
+
+2. **AndroidDevice.java Updates**
    - Replaced deprecated DesiredCapabilities with UiAutomator2Options
    - Updated mobile gesture implementations to use W3C Actions API
    - Added support for advanced interactions (longPress, scrollToText)

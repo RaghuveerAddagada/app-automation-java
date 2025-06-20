@@ -1,11 +1,11 @@
 package com.framework.utils;
 
 import com.framework.device.DriverManager;
+import io.appium.java_client.AppiumDriver;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,14 +15,12 @@ import java.util.Date;
 /**
  * Utility class for capturing and managing screenshots.
  */
+@Slf4j
 public class ScreenshotUtils {
     
-    private static final Logger logger = LoggerFactory.getLogger(ScreenshotUtils.class);
     private static final String SCREENSHOT_DIR = "target/screenshots/";
+    private static final String DATE_FORMAT = "yyyyMMdd-HHmmss";
     
-    /**
-     * Private constructor to prevent instantiation.
-     */
     private ScreenshotUtils() {
         // Private constructor to prevent instantiation
     }
@@ -30,126 +28,93 @@ public class ScreenshotUtils {
     /**
      * Captures a screenshot and saves it to the screenshots directory.
      * 
-     * @param testName The name of the test
-     * @return The path to the saved screenshot, or null if the screenshot could not be captured
+     * @param screenshotName The name for the screenshot file
+     * @return The path to the saved screenshot file, or null if the screenshot could not be captured
      */
-    public static String captureScreenshot(String testName) {
-        logger.info("Capturing screenshot for test: {}", testName);
+    public static String captureScreenshot(String screenshotName) {
+        log.debug("Capturing screenshot: {}", screenshotName);
         
         try {
             // Create the screenshots directory if it doesn't exist
-            File screenshotDir = new File(SCREENSHOT_DIR);
-            if (!screenshotDir.exists()) {
-                screenshotDir.mkdirs();
+            File directory = new File(SCREENSHOT_DIR);
+            if (!directory.exists()) {
+                directory.mkdirs();
             }
             
+            // Get the driver
+            AppiumDriver driver = DriverManager.getDriver();
+            if (driver == null) {
+                log.error("Driver is null, cannot capture screenshot");
+                return null;
+            }
+            
+            // Capture the screenshot
+            File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            
             // Generate a unique filename with timestamp
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String filename = testName + "_" + timestamp + ".png";
-            String filePath = SCREENSHOT_DIR + filename;
+            String timestamp = new SimpleDateFormat(DATE_FORMAT).format(new Date());
+            String fileName = screenshotName + "_" + timestamp + ".png";
+            String filePath = SCREENSHOT_DIR + fileName;
             
-            // Take the screenshot
-            TakesScreenshot ts = (TakesScreenshot) DriverManager.getDriver();
-            File source = ts.getScreenshotAs(OutputType.FILE);
+            // Save the screenshot to the file
+            File destFile = new File(filePath);
+            FileUtils.copyFile(srcFile, destFile);
             
-            // Save the screenshot
-            File destination = new File(filePath);
-            FileUtils.copyFile(source, destination);
-            
-            logger.info("Screenshot saved to: {}", filePath);
+            log.info("Screenshot saved to: {}", filePath);
             return filePath;
             
         } catch (IOException e) {
-            logger.error("Failed to capture screenshot for test: {}", testName, e);
+            log.error("Failed to capture screenshot: {}", e.getMessage(), e);
             return null;
         } catch (Exception e) {
-            logger.error("Error capturing screenshot for test: {}", testName, e);
+            log.error("Unexpected error capturing screenshot: {}", e.getMessage(), e);
             return null;
         }
     }
     
     /**
-     * Captures a screenshot with a custom name and saves it to the screenshots directory.
+     * Captures a screenshot with a timestamp as the name.
      * 
-     * @param name The custom name for the screenshot
-     * @return The path to the saved screenshot, or null if the screenshot could not be captured
+     * @return The path to the saved screenshot file, or null if the screenshot could not be captured
      */
-    public static String captureScreenshotWithName(String name) {
-        logger.info("Capturing screenshot with name: {}", name);
-        
-        try {
-            // Create the screenshots directory if it doesn't exist
-            File screenshotDir = new File(SCREENSHOT_DIR);
-            if (!screenshotDir.exists()) {
-                screenshotDir.mkdirs();
-            }
-            
-            // Generate a unique filename with timestamp
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String filename = name + "_" + timestamp + ".png";
-            String filePath = SCREENSHOT_DIR + filename;
-            
-            // Take the screenshot
-            TakesScreenshot ts = (TakesScreenshot) DriverManager.getDriver();
-            File source = ts.getScreenshotAs(OutputType.FILE);
-            
-            // Save the screenshot
-            File destination = new File(filePath);
-            FileUtils.copyFile(source, destination);
-            
-            logger.info("Screenshot saved to: {}", filePath);
-            return filePath;
-            
-        } catch (IOException e) {
-            logger.error("Failed to capture screenshot with name: {}", name, e);
-            return null;
-        } catch (Exception e) {
-            logger.error("Error capturing screenshot with name: {}", name, e);
-            return null;
-        }
+    public static String captureScreenshot() {
+        String timestamp = new SimpleDateFormat(DATE_FORMAT).format(new Date());
+        return captureScreenshot("screenshot_" + timestamp);
     }
     
     /**
-     * Gets the absolute path to the screenshots directory.
+     * Cleans up old screenshots that are older than the specified number of days.
      * 
-     * @return The absolute path to the screenshots directory
+     * @param daysToKeep The number of days to keep screenshots for
+     * @return The number of files deleted
      */
-    public static String getScreenshotDirectory() {
-        File screenshotDir = new File(SCREENSHOT_DIR);
-        return screenshotDir.getAbsolutePath();
-    }
-    
-    /**
-     * Cleans up old screenshots.
-     * 
-     * @param maxAgeInDays The maximum age of screenshots to keep in days
-     * @return The number of screenshots deleted
-     */
-    public static int cleanupOldScreenshots(int maxAgeInDays) {
-        logger.info("Cleaning up screenshots older than {} days", maxAgeInDays);
+    public static int cleanupOldScreenshots(int daysToKeep) {
+        log.info("Cleaning up screenshots older than {} days", daysToKeep);
         
-        File screenshotDir = new File(SCREENSHOT_DIR);
-        if (!screenshotDir.exists()) {
+        File directory = new File(SCREENSHOT_DIR);
+        if (!directory.exists() || !directory.isDirectory()) {
+            log.warn("Screenshots directory does not exist: {}", SCREENSHOT_DIR);
             return 0;
         }
         
-        File[] files = screenshotDir.listFiles();
-        if (files == null) {
-            return 0;
-        }
-        
-        long cutoffTime = System.currentTimeMillis() - (maxAgeInDays * 24 * 60 * 60 * 1000L);
+        long cutoffTime = System.currentTimeMillis() - (daysToKeep * 24 * 60 * 60 * 1000L);
+        File[] files = directory.listFiles();
         int deletedCount = 0;
         
-        for (File file : files) {
-            if (file.isFile() && file.lastModified() < cutoffTime) {
-                if (file.delete()) {
-                    deletedCount++;
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.lastModified() < cutoffTime) {
+                    if (file.delete()) {
+                        log.debug("Deleted old screenshot: {}", file.getName());
+                        deletedCount++;
+                    } else {
+                        log.warn("Failed to delete old screenshot: {}", file.getName());
+                    }
                 }
             }
         }
         
-        logger.info("Deleted {} old screenshots", deletedCount);
+        log.info("Deleted {} old screenshot files", deletedCount);
         return deletedCount;
     }
 }

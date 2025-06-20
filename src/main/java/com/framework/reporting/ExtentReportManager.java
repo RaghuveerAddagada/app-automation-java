@@ -5,8 +5,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -16,29 +15,23 @@ import java.util.Map;
 
 /**
  * Manager class for ExtentReports.
- * Handles report initialization, test creation, and report generation.
+ * Handles report creation, test tracking, and report generation.
  */
+@Slf4j
 public class ExtentReportManager {
     
-    private static final Logger logger = LoggerFactory.getLogger(ExtentReportManager.class);
     private static final String REPORT_DIR = "target/reports/";
-    private static final String REPORT_NAME = "AutomationReport";
-    private static final String REPORT_TITLE = "Mobile Automation Test Report";
-    private static final String REPORT_THEME = "STANDARD";
-    
+    private static final String DATE_FORMAT = "yyyy-MM-dd_HH-mm-ss";
     private static ExtentReports extentReports;
-    private static final Map<String, ExtentTest> testMap = new HashMap<>();
     private static final ThreadLocal<ExtentTest> extentTestThreadLocal = new ThreadLocal<>();
+    private static final Map<String, ExtentTest> testMap = new HashMap<>();
     
-    /**
-     * Private constructor to prevent instantiation.
-     */
     private ExtentReportManager() {
         // Private constructor to prevent instantiation
     }
     
     /**
-     * Initializes the ExtentReports instance.
+     * Gets the ExtentReports instance, initializing it if necessary.
      * 
      * @return The ExtentReports instance
      */
@@ -55,32 +48,34 @@ public class ExtentReportManager {
      * @return The new ExtentReports instance
      */
     private static ExtentReports createInstance() {
+        log.info("Creating ExtentReports instance");
+        
         // Create the reports directory if it doesn't exist
-        File reportDir = new File(REPORT_DIR);
-        if (!reportDir.exists()) {
-            reportDir.mkdirs();
+        File directory = new File(REPORT_DIR);
+        if (!directory.exists()) {
+            directory.mkdirs();
         }
         
         // Generate a unique report filename with timestamp
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String reportFilename = REPORT_NAME + "_" + timestamp + ".html";
-        String reportPath = REPORT_DIR + reportFilename;
+        String timestamp = new SimpleDateFormat(DATE_FORMAT).format(new Date());
+        String reportPath = REPORT_DIR + "TestReport_" + timestamp + ".html";
         
-        // Create the ExtentSparkReporter
+        // Create the reporter
         ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportPath);
-        sparkReporter.config().setDocumentTitle(REPORT_TITLE);
-        sparkReporter.config().setReportName(REPORT_TITLE);
-        sparkReporter.config().setTheme(Theme.valueOf(REPORT_THEME));
+        sparkReporter.config().setDocumentTitle("Mobile Automation Test Report");
+        sparkReporter.config().setReportName("Mobile Automation Test Results");
+        sparkReporter.config().setTheme(Theme.STANDARD);
         sparkReporter.config().setEncoding("utf-8");
-        sparkReporter.config().setTimeStampFormat("MMM dd, yyyy HH:mm:ss");
+        sparkReporter.config().setTimeStampFormat("yyyy-MM-dd HH:mm:ss");
         
-        // Create the ExtentReports instance
+        // Create the ExtentReports instance and attach the reporter
         ExtentReports reports = new ExtentReports();
         reports.attachReporter(sparkReporter);
         reports.setSystemInfo("OS", System.getProperty("os.name"));
         reports.setSystemInfo("Java Version", System.getProperty("java.version"));
+        reports.setSystemInfo("User", System.getProperty("user.name"));
         
-        logger.info("ExtentReports initialized with report path: {}", reportPath);
+        log.info("ExtentReports instance created at: {}", reportPath);
         return reports;
     }
     
@@ -89,87 +84,94 @@ public class ExtentReportManager {
      * 
      * @param testName The name of the test
      * @param description The description of the test
-     * @return The ExtentTest instance
+     * @return The created ExtentTest instance
      */
     public static synchronized ExtentTest createTest(String testName, String description) {
+        log.debug("Creating test: {} - {}", testName, description);
         ExtentTest test = getInstance().createTest(testName, description);
         testMap.put(testName, test);
         return test;
     }
     
     /**
-     * Gets the ExtentTest instance for the current thread.
-     * 
-     * @return The ExtentTest instance for the current thread
-     */
-    public static synchronized ExtentTest getTest() {
-        return extentTestThreadLocal.get();
-    }
-    
-    /**
-     * Sets the ExtentTest instance for the current thread.
+     * Sets the current test for the thread.
      * 
      * @param test The ExtentTest instance
      */
-    public static synchronized void setTest(ExtentTest test) {
+    public static void setTest(ExtentTest test) {
         extentTestThreadLocal.set(test);
     }
     
     /**
-     * Gets the ExtentTest instance for the specified test name.
+     * Gets the current test for the thread.
      * 
-     * @param testName The name of the test
-     * @return The ExtentTest instance for the specified test name
+     * @return The ExtentTest instance for the current thread
      */
-    public static synchronized ExtentTest getTest(String testName) {
-        return testMap.get(testName);
+    public static ExtentTest getTest() {
+        return extentTestThreadLocal.get();
     }
     
     /**
-     * Removes the ExtentTest instance for the current thread.
+     * Removes the current test from the thread.
      */
-    public static synchronized void removeTest() {
+    public static void removeTest() {
         extentTestThreadLocal.remove();
     }
     
     /**
-     * Logs a step in the current test.
+     * Gets a test by name.
      * 
-     * @param status The status of the step
-     * @param details The details of the step
+     * @param testName The name of the test
+     * @return The ExtentTest instance for the specified test name
      */
-    public static void log(Status status, String details) {
-        if (getTest() != null) {
-            getTest().log(status, details);
+    public static ExtentTest getTestByName(String testName) {
+        return testMap.get(testName);
+    }
+    
+    /**
+     * Logs a message to the current test.
+     * 
+     * @param status The status of the log entry
+     * @param message The message to log
+     */
+    public static void log(Status status, String message) {
+        ExtentTest test = getTest();
+        if (test != null) {
+            test.log(status, message);
+        } else {
+            log.warn("Attempted to log message but no test is set: {}", message);
         }
     }
     
     /**
-     * Logs a step with a screenshot in the current test.
+     * Logs a message with a screenshot to the current test.
      * 
-     * @param status The status of the step
-     * @param details The details of the step
+     * @param status The status of the log entry
+     * @param message The message to log
      * @param screenshotPath The path to the screenshot
      */
-    public static void log(Status status, String details, String screenshotPath) {
-        if (getTest() != null) {
+    public static void log(Status status, String message, String screenshotPath) {
+        ExtentTest test = getTest();
+        if (test != null) {
             try {
-                getTest().addScreenCaptureFromPath(screenshotPath);
-                getTest().log(status, details + " (Screenshot: " + screenshotPath + ")");
+                test.log(status, message);
+                test.addScreenCaptureFromPath(screenshotPath);
             } catch (Exception e) {
-                logger.error("Failed to add screenshot to report", e);
-                getTest().log(status, details + " (Screenshot failed to attach)");
+                log.error("Failed to add screenshot to report: {}", e.getMessage(), e);
+                test.log(status, message + " (Screenshot failed to attach)");
             }
+        } else {
+            log.warn("Attempted to log message with screenshot but no test is set: {}", message);
         }
     }
     
     /**
      * Flushes the report to disk.
      */
-    public static synchronized void flush() {
+    public static void flush() {
+        log.info("Flushing ExtentReports");
         if (extentReports != null) {
             extentReports.flush();
-            logger.info("ExtentReports flushed to disk");
         }
     }
 }

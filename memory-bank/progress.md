@@ -46,6 +46,7 @@
 - [x] Add more examples to README.md
 - [x] Create wiki pages with detailed usage instructions
 - [x] Add Javadoc comments to key classes
+- [x] Standardize logger implementation using Lombok @Slf4j
 
 ### Medium-term Enhancements
 - [ ] Add support for cloud testing platforms
@@ -118,6 +119,7 @@ While all initially planned milestones are complete, the following areas are bei
 
 | Date | Change | Description |
 |------|--------|-------------|
+| 2025-06-20 | Logger Standardization | Replaced manual logger declarations with Lombok @Slf4j annotation across all framework classes |
 | 2025-06-18 | Framework Improvements | Fixed deprecated APIs, added utility methods, enhanced reporting |
 | 2025-06-18 | Documentation | Created wiki-style docs and updated README with examples |
 | 2025-06-18 | Java Downgrade | Downgraded from Java 21 to Java 17 for compatibility |

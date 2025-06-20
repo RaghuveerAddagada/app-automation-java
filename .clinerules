@@ -45,6 +45,14 @@
    - Used for adding functionality to page objects
    - Example: `LoggingPageDecorator` adds logging to page interactions
 
+### Logging Patterns
+
+1. **Lombok @Slf4j Annotation**
+   - All classes use Lombok's `@Slf4j` annotation for logger creation
+   - Manual logger declarations (`private static final Logger logger = LoggerFactory.getLogger(ClassName.class)`) are avoided
+   - Logger is accessed via the `log` variable that Lombok generates
+   - Consistent log levels are used: ERROR for exceptions, WARN for potential issues, INFO for significant events, DEBUG for detailed flow
+
 ### Testing Patterns
 
 1. **Test Structure**
@@ -104,6 +112,7 @@
 2. **CI/CD Integration**: Added GitHub Actions workflows
 3. **Reporting**: Implemented ExtentReports for HTML reporting
 4. **Test Base**: Created BaseTest class for common functionality
+5. **Logger Standardization**: Replaced manual logger declarations with Lombok @Slf4j annotation
 
 ### Planned Changes
 
