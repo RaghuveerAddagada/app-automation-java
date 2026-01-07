@@ -1,0 +1,12 @@
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/capabilities/AndroidDeviceCapabilities.java
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/capabilities/DeviceCapabilities.java
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/capabilities/IOSDeviceCapabilities.java
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/drivers/DriverManager.java
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/helpers/ExtentReportIntegrator.java
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/helpers/ScreenshotManager.java
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/helpers/TestResultCollector.java
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/keywords/MobileUi.java
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/keywords/MobileUiAssertions.java
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/keywords/MobileUiGestures.java
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/keywords/MobileUiWaits.java
+/Users/raghuveeraddagada/Desktop/appium-automation-sample/core/src/main/java/com/automation/listeners/TestListener.java

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.automation.tests.BasicLoginTest" time="26.926" tests="2" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="http.proxyHost" value="127.0.0.1"/>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/raghuveeraddagada/.m2/repository/org/apache/maven/surefire/surefire-booter/3.5.2/surefire-booter-3.5.2.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/maven/surefire/surefire-api/3.5.2/surefire-api-3.5.2.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/maven/surefire/surefire-extensions-spi/3.5.2/surefire-extensions-spi-3.5.2.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/maven/surefire/surefire-shared-utils/3.5.2/surefire-shared-utils-3.5.2.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/maven/surefire/surefire-logger-api/3.5.2/surefire-logger-api-3.5.2.jar:/Users/raghuveeraddagada/Desktop/appium-automation-sample/common/target/test-classes:/Users/raghuveeraddagada/Desktop/appium-automation-sample/common/target/classes:/Users/raghuveeraddagada/.m2/repository/com/automation/core/1.0.0-SNAPSHOT/core-1.0.0-SNAPSHOT.jar:/Users/raghuveeraddagada/.m2/repository/com/automation/utilities/1.0.0-SNAPSHOT/utilities-1.0.0-SNAPSHOT.jar:/Users/raghuveeraddagada/.m2/repository/ch/qos/logback/logback-classic/1.5.16/logback-classic-1.5.16.jar:/Users/raghuveeraddagada/.m2/repository/ch/qos/logback/logback-core/1.5.16/logback-core-1.5.16.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-java/4.34.0/selenium-java-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-api/4.34.0/selenium-api-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-chrome-driver/4.34.0/selenium-chrome-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/com/google/auto/service/auto-service-annotations/1.1.1/auto-service-annotations-1.1.1.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-chromium-driver/4.34.0/selenium-chromium-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-json/4.34.0/selenium-json-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-manager/4.34.0/selenium-manager-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-devtools-v136/4.34.0/selenium-devtools-v136-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-devtools-v137/4.34.0/selenium-devtools-v137-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-devtools-v138/4.34.0/selenium-devtools-v138-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-edge-driver/4.34.0/selenium-edge-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-firefox-driver/4.34.0/selenium-firefox-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-http/4.34.0/selenium-http-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-ie-driver/4.34.0/selenium-ie-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-remote-driver/4.34.0/selenium-remote-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/com/google/guava/guava/33.4.8-jre/guava-33.4.8-jre.jar:/Users/raghuveeraddagada/.m2/repository/com/google/guava/failureaccess/1.0.3/failureaccess-1.0.3.jar:/Users/raghuveeraddagada/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/raghuveeraddagada/.m2/repository/com/google/j2objc/j2objc-annotations/3.0.0/j2objc-annotations-3.0.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-api/1.51.0/opentelemetry-api-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-context/1.51.0/opentelemetry-context-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-exporter-logging/1.51.0/opentelemetry-exporter-logging-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-common/1.51.0/opentelemetry-sdk-common-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-extension-autoconfigure-spi/1.51.0/opentelemetry-sdk-extension-autoconfigure-spi-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-extension-autoconfigure/1.51.0/opentelemetry-sdk-extension-autoconfigure-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-trace/1.51.0/opentelemetry-sdk-trace-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk/1.51.0/opentelemetry-sdk-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-metrics/1.51.0/opentelemetry-sdk-metrics-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-logs/1.51.0/opentelemetry-sdk-logs-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/net/bytebuddy/byte-buddy/1.17.6/byte-buddy-1.17.6.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-os/4.34.0/selenium-os-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/commons/commons-exec/1.5.0/commons-exec-1.5.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-safari-driver/4.34.0/selenium-safari-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-support/4.34.0/selenium-support-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/io/appium/java-client/9.5.0/java-client-9.5.0.jar:/Users/raghuveeraddagada/.m2/repository/com/google/code/gson/gson/2.13.1/gson-2.13.1.jar:/Users/raghuveeraddagada/.m2/repository/com/google/errorprone/error_prone_annotations/2.38.0/error_prone_annotations-2.38.0.jar:/Users/raghuveeraddagada/.m2/repository/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar:/Users/raghuveeraddagada/.m2/repository/io/github/ashwithpoojary98/appium_flutterfinder_java/1.0.10/appium_flutterfinder_java-1.0.10.jar:/Users/raghuveeraddagada/.m2/repository/com/aventstack/extentreports/5.1.1/extentreports-5.1.1.jar:/Users/raghuveeraddagada/.m2/repository/io/reactivex/rxjava3/rxjava/3.1.6/rxjava-3.1.6.jar:/Users/raghuveeraddagada/.m2/repository/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar:/Users/raghuveeraddagada/.m2/repository/org/freemarker/freemarker/2.3.32/freemarker-2.3.32.jar:/Users/raghuveeraddagada/.m2/repository/org/testng/testng/7.7.0/testng-7.7.0.jar:/Users/raghuveeraddagada/.m2/repository/org/slf4j/slf4j-api/2.0.16/slf4j-api-2.0.16.jar:/Users/raghuveeraddagada/.m2/repository/com/beust/jcommander/1.82/jcommander-1.82.jar:/Users/raghuveeraddagada/.m2/repository/org/webjars/jquery/3.6.1/jquery-3.6.1.jar:/Users/raghuveeraddagada/.m2/repository/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar:/Users/raghuveeraddagada/.m2/repository/org/awaitility/awaitility/4.3.0/awaitility-4.3.0.jar:/Users/raghuveeraddagada/.m2/repository/org/hamcrest/hamcrest/2.1/hamcrest-2.1.jar:/Users/raghuveeraddagada/.m2/repository/com/github/javafaker/javafaker/1.0.2/javafaker-1.0.2.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar:/Users/raghuveeraddagada/.m2/repository/org/yaml/snakeyaml/1.23/snakeyaml-1.23-android.jar:/Users/raghuveeraddagada/.m2/repository/com/github/mifmif/generex/1.0.2/generex-1.0.2.jar:/Users/raghuveeraddagada/.m2/repository/dk/brics/automaton/automaton/1.11-8/automaton-1.11-8.jar:/Users/raghuveeraddagada/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.18.2/jackson-databind-2.18.2.jar:/Users/raghuveeraddagada/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.18.2/jackson-annotations-2.18.2.jar:/Users/raghuveeraddagada/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.18.2/jackson-core-2.18.2.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/maven/surefire/surefire-testng/3.5.2/surefire-testng-3.5.2.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/maven/surefire/common-java5/3.5.2/common-java5-3.5.2.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/maven/surefire/surefire-testng-utils/3.5.2/surefire-testng-utils-3.5.2.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/maven/surefire/surefire-grouper/3.5.2/surefire-grouper-3.5.2.jar"/>
+    <property name="https.proxyPort" value="8888"/>
+    <property name="java.vm.vendor" value="Homebrew"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="user.timezone" value="Asia/Kolkata"/>
+    <property name="suiteXmlFile" value="testNGsuite/sample-suite.xml"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="automation.device.type.preference" value="virtual"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk@21/21.0.9/libexec/openjdk.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="org.apache.maven.surefire.booter.ForkedBooter /Users/raghuveeraddagada/Desktop/appium-automation-sample/common/target/surefire 2026-01-07T23-46-38_211-jvmRun1 surefire-20260107234638242_1tmp surefire_0-20260107234638242_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/raghuveeraddagada/Desktop/appium-automation-sample/common/target/test-classes:/Users/raghuveeraddagada/Desktop/appium-automation-sample/common/target/classes:/Users/raghuveeraddagada/.m2/repository/com/automation/core/1.0.0-SNAPSHOT/core-1.0.0-SNAPSHOT.jar:/Users/raghuveeraddagada/.m2/repository/com/automation/utilities/1.0.0-SNAPSHOT/utilities-1.0.0-SNAPSHOT.jar:/Users/raghuveeraddagada/.m2/repository/ch/qos/logback/logback-classic/1.5.16/logback-classic-1.5.16.jar:/Users/raghuveeraddagada/.m2/repository/ch/qos/logback/logback-core/1.5.16/logback-core-1.5.16.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-java/4.34.0/selenium-java-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-api/4.34.0/selenium-api-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-chrome-driver/4.34.0/selenium-chrome-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/com/google/auto/service/auto-service-annotations/1.1.1/auto-service-annotations-1.1.1.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-chromium-driver/4.34.0/selenium-chromium-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-json/4.34.0/selenium-json-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-manager/4.34.0/selenium-manager-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-devtools-v136/4.34.0/selenium-devtools-v136-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-devtools-v137/4.34.0/selenium-devtools-v137-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-devtools-v138/4.34.0/selenium-devtools-v138-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-edge-driver/4.34.0/selenium-edge-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-firefox-driver/4.34.0/selenium-firefox-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-http/4.34.0/selenium-http-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-ie-driver/4.34.0/selenium-ie-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-remote-driver/4.34.0/selenium-remote-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/com/google/guava/guava/33.4.8-jre/guava-33.4.8-jre.jar:/Users/raghuveeraddagada/.m2/repository/com/google/guava/failureaccess/1.0.3/failureaccess-1.0.3.jar:/Users/raghuveeraddagada/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/raghuveeraddagada/.m2/repository/com/google/j2objc/j2objc-annotations/3.0.0/j2objc-annotations-3.0.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-api/1.51.0/opentelemetry-api-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-context/1.51.0/opentelemetry-context-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-exporter-logging/1.51.0/opentelemetry-exporter-logging-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-common/1.51.0/opentelemetry-sdk-common-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-extension-autoconfigure-spi/1.51.0/opentelemetry-sdk-extension-autoconfigure-spi-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-extension-autoconfigure/1.51.0/opentelemetry-sdk-extension-autoconfigure-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-trace/1.51.0/opentelemetry-sdk-trace-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk/1.51.0/opentelemetry-sdk-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-metrics/1.51.0/opentelemetry-sdk-metrics-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/io/opentelemetry/opentelemetry-sdk-logs/1.51.0/opentelemetry-sdk-logs-1.51.0.jar:/Users/raghuveeraddagada/.m2/repository/net/bytebuddy/byte-buddy/1.17.6/byte-buddy-1.17.6.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-os/4.34.0/selenium-os-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/commons/commons-exec/1.5.0/commons-exec-1.5.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-safari-driver/4.34.0/selenium-safari-driver-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/org/seleniumhq/selenium/selenium-support/4.34.0/selenium-support-4.34.0.jar:/Users/raghuveeraddagada/.m2/repository/io/appium/java-client/9.5.0/java-client-9.5.0.jar:/Users/raghuveeraddagada/.m2/repository/com/google/code/gson/gson/2.13.1/gson-2.13.1.jar:/Users/raghuveeraddagada/.m2/repository/com/google/errorprone/error_prone_annotations/2.38.0/error_prone_annotations-2.38.0.jar:/Users/raghuveeraddagada/.m2/repository/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar:/Users/raghuveeraddagada/.m2/repository/io/github/ashwithpoojary98/appium_flutterfinder_java/1.0.10/appium_flutterfinder_java-1.0.10.jar:/Users/raghuveeraddagada/.m2/repository/com/aventstack/extentreports/5.1.1/extentreports-5.1.1.jar:/Users/raghuveeraddagada/.m2/repository/io/reactivex/rxjava3/rxjava/3.1.6/rxjava-3.1.6.jar:/Users/raghuveeraddagada/.m2/repository/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar:/Users/raghuveeraddagada/.m2/repository/org/freemarker/freemarker/2.3.32/freemarker-2.3.32.jar:/Users/raghuveeraddagada/.m2/repository/org/testng/testng/7.7.0/testng-7.7.0.jar:/Users/raghuveeraddagada/.m2/repository/org/slf4j/slf4j-api/2.0.16/slf4j-api-2.0.16.jar:/Users/raghuveeraddagada/.m2/repository/com/beust/jcommander/1.82/jcommander-1.82.jar:/Users/raghuveeraddagada/.m2/repository/org/webjars/jquery/3.6.1/jquery-3.6.1.jar:/Users/raghuveeraddagada/.m2/repository/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar:/Users/raghuveeraddagada/.m2/repository/org/awaitility/awaitility/4.3.0/awaitility-4.3.0.jar:/Users/raghuveeraddagada/.m2/repository/org/hamcrest/hamcrest/2.1/hamcrest-2.1.jar:/Users/raghuveeraddagada/.m2/repository/com/github/javafaker/javafaker/1.0.2/javafaker-1.0.2.jar:/Users/raghuveeraddagada/.m2/repository/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar:/Users/raghuveeraddagada/.m2/repository/org/yaml/snakeyaml/1.23/snakeyaml-1.23-android.jar:/Users/raghuveeraddagada/.m2/repository/com/github/mifmif/generex/1.0.2/generex-1.0.2.jar:/Users/raghuveeraddagada/.m2/repository/dk/brics/automaton/automaton/1.11-8/automaton-1.11-8.jar:/Users/raghuveeraddagada/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.18.2/jackson-databind-2.18.2.jar:/Users/raghuveeraddagada/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.18.2/jackson-annotations-2.18.2.jar:/Users/raghuveeraddagada/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.18.2/jackson-core-2.18.2.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/raghuveeraddagada"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-10-21"/>
+    <property name="java.home" value="/opt/homebrew/Cellar/openjdk@21/21.0.9/libexec/openjdk.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="https.proxyHost" value="127.0.0.1"/>
+    <property name="basedir" value="/Users/raghuveeraddagada/Desktop/appium-automation-sample/common"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="apple.awt.application.name" value="ForkedBooter"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.9"/>
+    <property name="user.name" value="raghuveeraddagada"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="15.6"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Homebrew"/>
+    <property name="localRepository" value="/Users/raghuveeraddagada/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="java.io.tmpdir" value="/var/folders/0d/84yf1n951cdd8dl7y3mb7wt80000gp/T/"/>
+    <property name="java.version" value="21.0.9"/>
+    <property name="user.dir" value="/Users/raghuveeraddagada/Desktop/appium-automation-sample/common"/>
+    <property name="os.arch" value="aarch64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/raghuveeraddagada/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Homebrew"/>
+    <property name="java.vm.version" value="21.0.9"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="java.class.version" value="65.0"/>
+    <property name="http.proxyPort" value="8888"/>
+  </properties>
+  <testcase name="testAppLaunch" classname="com.automation.tests.BasicLoginTest" time="0.007">
+    <system-out><![CDATA[23:46:38,407 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.5.16
+23:46:38,408 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7bedc48a - No custom configurators were discovered as a service.
+23:46:38,408 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7bedc48a - Trying to configure with ch.qos.logback.classic.joran.SerializedModelConfigurator
+23:46:38,408 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7bedc48a - Constructed configurator of type class ch.qos.logback.classic.joran.SerializedModelConfigurator
+23:46:38,410 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.scmo]
+23:46:38,411 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.scmo]
+23:46:38,415 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7bedc48a - ch.qos.logback.classic.joran.SerializedModelConfigurator.configure() call lasted 3 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+23:46:38,415 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7bedc48a - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
+23:46:38,415 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7bedc48a - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
+23:46:38,415 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+23:46:38,417 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [jar:file:/Users/raghuveeraddagada/.m2/repository/com/automation/utilities/1.0.0-SNAPSHOT/utilities-1.0.0-SNAPSHOT.jar!/logback.xml]
+23:46:38,419 |-INFO in ConfigurationWatchList(mainURL=jar:file:/Users/raghuveeraddagada/.m2/repository/com/automation/utilities/1.0.0-SNAPSHOT/utilities-1.0.0-SNAPSHOT.jar!/logback.xml, fileWatchList={}, urlWatchList=[}) - URL [jar:file:/Users/raghuveeraddagada/.m2/repository/com/automation/utilities/1.0.0-SNAPSHOT/utilities-1.0.0-SNAPSHOT.jar!/logback.xml] is not of type file
+23:46:38,462 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [CONSOLE]
+23:46:38,462 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+23:46:38,464 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+23:46:38,485 |-INFO in ch.qos.logback.core.ConsoleAppender[CONSOLE] - BEWARE: Writing to the console can be very slow. Avoid logging to the 
+23:46:38,485 |-INFO in ch.qos.logback.core.ConsoleAppender[CONSOLE] - console in production environments, especially in high volume systems.
+23:46:38,485 |-INFO in ch.qos.logback.core.ConsoleAppender[CONSOLE] - See also https://logback.qos.ch/codes.html#slowConsole
+23:46:38,485 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [FILE]
+23:46:38,485 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+23:46:38,487 |-WARN in ch.qos.logback.core.model.processor.ImplicitModelHandler - Ignoring unknown property [maxFileSize] in [ch.qos.logback.core.rolling.TimeBasedRollingPolicy]
+23:46:38,489 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1026871825 - setting totalSizeCap to 300 MB
+23:46:38,490 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1026871825 - Will use gz compression
+23:46:38,490 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1026871825 - Will use the pattern target/logs/test-execution.%d{yyyy-MM-dd}.%i.log for the active file
+23:46:38,500 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'target/logs/test-execution.%d{yyyy-MM-dd}.%i.log.gz'.
+23:46:38,500 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+23:46:38,502 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to 2026-01-07T18:16:38.502Z
+23:46:38,503 |-ERROR in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Filename pattern [target/logs/test-execution.%d{yyyy-MM-dd}.%i.log.gz] contains an integer token converter, i.e. %i, INCOMPATIBLE with this configuration. Please remove it.
+23:46:38,503 |-WARN in c.q.l.core.rolling.TimeBasedRollingPolicy@1026871825 - Subcomponent did not start. TimeBasedRollingPolicy will not start.
+23:46:38,503 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+23:46:38,503 |-WARN in ch.qos.logback.core.rolling.RollingFileAppender[FILE] - TriggeringPolicy has not started. RollingFileAppender will not start
+23:46:38,503 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [EXTENT_REPORTS]
+23:46:38,503 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [com.automation.utils.logback.ExtentReportsAppender]
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [io.appium.java_client] to WARN
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [io.appium.java_client.remote] to WARN
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [io.appium.java_client.remote.http] to WARN
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [io.appium.java_client.service] to WARN
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.openqa.selenium] to WARN
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.openqa.selenium.remote] to WARN
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.openqa.selenium.remote.http] to WARN
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.openqa.selenium.support] to WARN
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.asynchttpclient] to WARN
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [io.netty] to WARN
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.http] to WARN
+23:46:38,503 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.hc] to WARN
+23:46:38,504 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [okhttp3] to WARN
+23:46:38,504 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [okio] to WARN
+23:46:38,504 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [com.automation] to INFO
+23:46:38,505 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting additivity of logger [com.automation] to true
+23:46:38,505 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [EXTENT_REPORTS] to Logger[com.automation]
+23:46:38,505 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.testng] to INFO
+23:46:38,506 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to WARN
+23:46:38,506 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [CONSOLE] to Logger[ROOT]
+23:46:38,506 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [FILE] to Logger[ROOT]
+23:46:38,506 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@2de23121 - End of configuration.
+23:46:38,506 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@63475ace - Registering current configuration as safe fallback point
+23:46:38,506 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7bedc48a - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 91 milliseconds. ExecutionStatus=DO_NOT_INVOKE_NEXT_IF_ANY
+
+23:46:38.580 INFO  [AppLaunchHelper.initializeTestParameters] Loading test parameters from TestNG context
+23:46:38.581 WARN  Environment properties not configured: Bundle ID not configured for environment 'stage'. Please set system property: automation.bundleId.stage. Will need to be provided via parameters.
+23:46:38.582 INFO  Test parameters: environment=stage, platformName=android, platformVersion=16, deviceType=virtual, appiumServer=local, deviceName=Pixel_8, deviceId=null, packageName=null, appActivity=null
+23:46:38.582 INFO  [AppLaunchHelper.initializeTestParameters] Test parameters initialized for platform: android
+23:46:38.582 INFO  [AppLaunchHelper.prepareAppiumPort] Preparing Appium port: 4723
+23:46:38.649 INFO  [AppLaunchHelper.prepareAppiumPort] Appium port 4723 is already available
+23:46:38.649 INFO  [AppLaunchHelper.ensureDeviceReady] Ensuring device readiness for platform: android, device: Pixel_8, type: virtual
+23:46:38.649 INFO  [DeviceOsType.ANDROID.ensureDeviceReady] Set device preference: virtual
+23:46:38.650 INFO  [AndroidDeviceHelper] Ensuring virtual Android emulator is ready for testing
+23:46:38.650 INFO  [AndroidDeviceHelper] Verifying ADB server health before device operations
+23:46:38.711 INFO  [AndroidDeviceHelper] ADB is already healthy - skipping restart
+23:46:38.755 INFO  [AndroidDeviceHelper] Emulator emulator-5554 is already running and responsive
+23:46:38.755 INFO  [SystemHelpers] Checking WiFi status via ADB
+23:46:38.776 INFO  [SystemHelpers] Using emulator device (fallback): emulator-5554
+23:46:38.814 INFO  [SystemHelpers] WiFi status: enabled
+23:46:38.814 INFO  [AndroidDeviceHelper] WiFi is enabled and ready
+23:46:38.817 INFO  [AppLaunchHelper.buildAppiumServiceBuilder] Appium service configured successfully on 127.0.0.1:4723
+23:46:38.817 INFO  [AppLaunchHelper.startAndVerifyAppiumServer] Starting Appium server on 127.0.0.1:4723
+23:46:42.006 INFO  [AppLaunchHelper.startAndVerifyAppiumServer] STARTUP_SUCCESS - Appium server started successfully on 127.0.0.1:4723
+23:46:42.020 INFO  [DeviceCapabilities] Starting driver initialization for device: Pixel_8, platform: android, environment: stage
+23:46:42.020 INFO  [DeviceCapabilities] App installation skipped - using pre-installed app
+23:46:42.020 INFO  [AppLaunchHelper.buildAppiumServerUrl] Building Appium server URL with host: 127.0.0.1, port: 4723
+23:46:42.020 INFO  [AppLaunchHelper.buildAppiumServerUrl] Successfully built Appium server URL: http://127.0.0.1:4723
+23:46:42.020 INFO  [DeviceCapabilities] Built Appium server URL: http://127.0.0.1:4723
+23:46:42.020 INFO  [DeviceCapabilities] Creating android driver session with URL: http://127.0.0.1:4723
+23:46:42.022 INFO  Configuring Android device capabilities for device: Pixel_8
+23:46:42.037 INFO  Configured for virtual device (emulator): Pixel_8
+23:46:42.037 INFO  Android device capabilities configured successfully
+23:46:43.928 INFO  [DeviceCapabilities] Appium driver initialized for platform: android
+23:46:43.928 INFO  [DeviceCapabilities] Driver registered successfully for android on device: Pixel_8
+23:46:43.928 INFO  [DeviceCapabilities] Driver initialization completed successfully
+23:46:43.936 INFO  === Starting App Launch Test ===
+23:46:43.936 INFO  App launched successfully with package: null
+23:46:43.936 INFO  Platform: android
+23:46:43.936 INFO  Device: Pixel_8
+23:46:43.936 INFO  === App Launch Test Completed ===
+]]></system-out>
+  </testcase>
+  <testcase name="testLogin" classname="com.automation.tests.BasicLoginTest" time="21.054">
+    <system-out><![CDATA[23:46:43.937 INFO  === Starting Basic Login Test ===
+23:46:43.937 INFO  Handling permission popups
+23:46:44.075 INFO  [PermissionsScreen] Waiting for push notification permission popup (timeout: 3s)
+23:46:44.232 INFO  [PermissionsScreen] Clicking allow button for push notification permission
+23:46:54.768 INFO  [PermissionsScreen] Push notification permission popup is not displayed
+23:46:54.768 INFO  [PermissionsScreen] Waiting for device location permission popup (timeout: 3s)
+23:46:54.788 INFO  [PermissionsScreen] Clicking allow while using app for location permission
+23:47:04.966 INFO  [PermissionsScreen] Device location permission popup is not displayed
+23:47:04.966 INFO  Performing login
+23:47:04.969 INFO  [LoginScreen] Starting login process for user: testuser
+23:47:04.987 INFO  [LoginScreen] User is already logged in
+23:47:04.987 INFO  [LoginScreen] User is already logged in
+23:47:04.987 INFO  Verifying home screen is displayed
+23:47:05.004 INFO  [HomeScreen] Home screen is displayed
+23:47:05.004 INFO  ✓ Login successful - Home screen is displayed
+23:47:05.004 INFO  === Basic Login Test Completed ===
+]]></system-out>
+  </testcase>
+</testsuite>

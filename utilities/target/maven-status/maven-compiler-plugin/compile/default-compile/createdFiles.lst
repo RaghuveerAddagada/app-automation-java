@@ -1,0 +1,5 @@
+com/automation/constants/Commands$Simctl.class
+com/automation/constants/Commands$Adb.class
+com/automation/constants/Commands.class
+com/automation/constants/Commands$System.class
+com/automation/constants/Commands$Shell.class

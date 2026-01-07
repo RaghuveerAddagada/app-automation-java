@@ -1,0 +1,4 @@
+com/automation/sample/BaseAppLaunch.class
+com/automation/screens/HomeScreen.class
+com/automation/screens/LoginScreen.class
+com/automation/screens/PermissionsScreen.class

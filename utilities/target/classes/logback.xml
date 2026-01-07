@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Console appender for standard output -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File appender for detailed logs -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>target/logs/test-execution.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>target/logs/test-execution.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>300MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ExtentReports Appender - forwards INFO logs to HTML report -->
+    <appender name="EXTENT_REPORTS" class="com.automation.utils.logback.ExtentReportsAppender"/>
+
+    <!-- Suppress Appium HTTP and WebDriver logs -->
+    <logger name="io.appium.java_client" level="WARN"/>
+    <logger name="io.appium.java_client.remote" level="WARN"/>
+    <logger name="io.appium.java_client.remote.http" level="WARN"/>
+    <logger name="io.appium.java_client.service" level="WARN"/>
+
+    <!-- Suppress Selenium WebDriver HTTP logs -->
+    <logger name="org.openqa.selenium" level="WARN"/>
+    <logger name="org.openqa.selenium.remote" level="WARN"/>
+    <logger name="org.openqa.selenium.remote.http" level="WARN"/>
+    <logger name="org.openqa.selenium.support" level="WARN"/>
+
+    <!-- Suppress HTTP client libraries -->
+    <logger name="org.asynchttpclient" level="WARN"/>
+    <logger name="io.netty" level="WARN"/>
+    <logger name="org.apache.http" level="WARN"/>
+    <logger name="org.apache.hc" level="WARN"/>
+    <logger name="okhttp3" level="WARN"/>
+    <logger name="okio" level="WARN"/>
+
+    <!-- Application Logger with ExtentReports Integration -->
+    <logger name="com.automation" level="INFO" additivity="true">
+        <appender-ref ref="EXTENT_REPORTS"/>
+    </logger>
+
+    <!-- TestNG logs at INFO level -->
+    <logger name="org.testng" level="INFO"/>
+
+    <!-- Root logger - suppress everything else by default -->
+    <root level="WARN">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
